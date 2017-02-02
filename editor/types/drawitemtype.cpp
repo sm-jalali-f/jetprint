@@ -1,0 +1,6 @@
+#include "drawitemtype.h"
+
+// DrawItemType()
+//{
+
+//}

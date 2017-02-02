@@ -1,0 +1,6 @@
+#include "mousemoveresult.h"
+
+// MouseMoveResult()
+//{
+
+//}

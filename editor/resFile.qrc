@@ -1,0 +1,22 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/icons/ic_circle.png</file>
+        <file>res/icons/ic_rectangle.png</file>
+        <file>res/icons/ic_barcode.png</file>
+        <file>res/icons/ic_image.png</file>
+        <file>res/icons/ic_text.png</file>
+        <file>res/icons/ic_redo.png</file>
+        <file>res/icons/ic_time_date.png</file>
+        <file>res/icons/ic_undo.png</file>
+        <file>res/icons/ic_floppy_save.png</file>
+        <file>res/icons/ic_print.png</file>
+        <file>res/icons/ic_diamonds.png</file>
+        <file>res/icons/ic_ellipse.png</file>
+        <file>res/icons/ic_line.png</file>
+        <file>res/icons/ic_parallalogram.png</file>
+        <file>res/icons/ic_square.png</file>
+        <file>res/icons/ic_triangle.png</file>
+        <file>res/icons/ic_app.png</file>
+        <file>res/icons/ic_rotate.png</file>
+    </qresource>
+</RCC>
