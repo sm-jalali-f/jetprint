@@ -20,8 +20,8 @@ private:
     int startX;
     int widthRuler;
     int interval;
-    int shortLineLength =40;
-    int longLineLength =80;
+    int shortLineLength =20;
+    int longLineLength =40;
     int pageHeight;
 };
 

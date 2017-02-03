@@ -26,6 +26,7 @@ void VerticalRuler::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     shapePen.setColor(QColor(Qt::black));
 
     painter->setPen(shapePen);
+    painter->drawLine(longLineLength,0,longLineLength,heightRuler);
     for(int i=0;i<heightRuler/interval;i++){
         if(i%10==0){
             painter->drawLine(0,i*interval,longLineLength,i*interval);
@@ -43,6 +44,12 @@ QPoint VerticalRuler::getPosition()
     point.setX(0);
     point.setY(0);
     return point;
+}
+
+void VerticalRuler::setHeightRuler(int height)
+{
+    this->heightRuler =height;
+    update();
 }
 
 int VerticalRuler::getWidth() const

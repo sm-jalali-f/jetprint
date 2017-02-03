@@ -14,14 +14,15 @@ public:
     VerticalRuler(QWidget *parent,int height,int interval);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QPoint getPosition();
+    void setHeightRuler(int height);
     int getWidth() const;
     int getHeight() const;
     QRectF boundingRect() const;
 private:
     int heightRuler;
     int interval;
-    int shortLineLength =40;
-    int longLineLength =80;
+    int shortLineLength =20;
+    int longLineLength =40;
 };
 
 #endif // VERTICALRULER_H

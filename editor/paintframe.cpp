@@ -20,6 +20,7 @@ PaintFrame::PaintFrame(QWidget *parent) : QGraphicsView(parent)
     drawDividerLine(minimumEndLineX);
     vRuler = new VerticalRuler(this,fixedHeight,10);
     hRuler = new HorizontalRuler(this,vRuler->getWidth(),fixedWidth-vRuler->getWidth(),fixedHeight,10);
+    vRuler->setHeightRuler(fixedHeight-hRuler->getHeight());
     scene->addItem(vRuler);
     vRuler->show();
     scene->addItem(hRuler);

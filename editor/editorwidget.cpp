@@ -90,6 +90,11 @@ EditorWidget::EditorWidget(QWidget *parent) :
     verticalLayout->addWidget(widget);
     paintFrame = new PaintFrame();
     verticalLayout->addWidget(paintFrame);
+//    printInfoLayout = new QVBoxLayout();
+//    QLabel *infoLabel = new QLabel("اطلاعات چاپ");
+//    printInfoLayout->addWidget(infoLabel);
+//    verticalLayout->addLayout(printInfoLayout);
+//    verticalLayout->addStretch(1);
 
 
     setLayout(verticalLayout);

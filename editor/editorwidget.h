@@ -32,7 +32,7 @@ private :
     QPushButton *circleBtn,*ovalBtn,*squareBtn,*rectangleBtn,*triangleBtn,*diamondBtn,*parallelogramBtn,*lineBtn;
     QPushButton *fontBtn,*sizeBtn,*acceptTextBtn,*deleteBtn;
     QWidget *widget;
-    QVBoxLayout *verticalLayout;
+    QVBoxLayout *verticalLayout,*printInfoLayout;
     QHBoxLayout *mainToolsLayout,*shapeSubToolsLayout,*textSubToolsLayout;
 
     QHBoxLayout *shapeSelectToolLayout;

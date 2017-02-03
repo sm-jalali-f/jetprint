@@ -25,20 +25,21 @@ void HorizontalRuler::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 
     painter->setPen(shapePen);
     painter->setOpacity(Qt::transparent);
-    QRectF bgRuler(startX,pageHeight-longLineLength,widthRuler,longLineLength);
+    QRectF bgRuler(-longLineLength,0,widthRuler+longLineLength,longLineLength);
     painter->fillRect(bgRuler,QColor(Qt::gray));
     shapePen.setColor(QColor(Qt::black));
 
     painter->setPen(shapePen);
     qDebug()<<"ssssssssssssssssssssssssssssssssssss111";
-    qDebug()<<widthRuler;
-    qDebug()<<interval;
+    qDebug()<<"HorizontalRuler: painter.widthRuler="<<widthRuler;
+    qDebug()<<"HorizontalRuler: painter.interval="<<interval;
+    qDebug()<<"HorizontalRuler: painter.lineCount="<<widthRuler/interval;
+    painter->drawLine(0,0,widthRuler+startX,0);
     for(int i=0;i<widthRuler/interval;i++){
-        qDebug()<<i;
         if(i%10==0){
-            painter->drawLine(i*interval+startX,pageHeight-longLineLength,i*interval+startX,pageHeight-longLineLength+shortLineLength);
+            painter->drawLine(i*interval,0,i*interval,longLineLength);
         }else{
-            painter->drawLine(i*interval+startX,pageHeight-longLineLength,i*interval+startX,pageHeight-longLineLength+longLineLength);
+            painter->drawLine(i*interval,0,i*interval,shortLineLength);
 
         }
 
