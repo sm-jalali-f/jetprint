@@ -30,10 +30,10 @@ void HorizontalRuler::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     shapePen.setColor(QColor(Qt::black));
 
     painter->setPen(shapePen);
-    qDebug()<<"ssssssssssssssssssssssssssssssssssss111";
-    qDebug()<<"HorizontalRuler: painter.widthRuler="<<widthRuler;
-    qDebug()<<"HorizontalRuler: painter.interval="<<interval;
-    qDebug()<<"HorizontalRuler: painter.lineCount="<<widthRuler/interval;
+//    qDebug()<<"ssssssssssssssssssssssssssssssssssss111";
+//    qDebug()<<"HorizontalRuler: painter.widthRuler="<<widthRuler;
+//    qDebug()<<"HorizontalRuler: painter.interval="<<interval;
+//    qDebug()<<"HorizontalRuler: painter.lineCount="<<widthRuler/interval;
     painter->drawLine(0,0,widthRuler+startX,0);
     for(int i=0;i<widthRuler/interval;i++){
         if(i%10==0){

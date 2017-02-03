@@ -7,6 +7,8 @@ EditorWidget::EditorWidget(QWidget *parent) :
 
     verticalLayout = new QVBoxLayout();
     mainToolsLayout = new QHBoxLayout();
+    QWidget *subToolTopWidget =new QWidget();
+    subMainToolLayout = new QHBoxLayout(subToolTopWidget);
 //    shapeSubToolsLayout= new QHBoxLayout();
 //    textSubToolsLayout= new QHBoxLayout();
 
@@ -87,6 +89,7 @@ EditorWidget::EditorWidget(QWidget *parent) :
     widget = new QWidget();
 
     verticalLayout->addLayout(mainToolsLayout);
+    verticalLayout->addWidget(subToolTopWidget);
     verticalLayout->addWidget(widget);
     paintFrame = new PaintFrame();
     verticalLayout->addWidget(paintFrame);
@@ -94,7 +97,7 @@ EditorWidget::EditorWidget(QWidget *parent) :
 //    QLabel *infoLabel = new QLabel("اطلاعات چاپ");
 //    printInfoLayout->addWidget(infoLabel);
 //    verticalLayout->addLayout(printInfoLayout);
-//    verticalLayout->addStretch(1);
+    verticalLayout->addStretch(1);
 
 
     setLayout(verticalLayout);
@@ -104,6 +107,9 @@ EditorWidget::EditorWidget(QWidget *parent) :
     connect(printBtn,SIGNAL(clicked()),this,SLOT(showPrintWindow()));
     connect(dateBtn,SIGNAL(clicked()),this,SLOT(onDateBtnClicked()));
     connect(imageBtn,SIGNAL(clicked()),this,SLOT(onImageBtnClicked()));
+    onShapeBtnClicked();
+    subToolTopWidget->setFixedHeight(shapeBtn->height());
+//    subMainToolLayout->SetMinimumSize(QSize(10,shapeBtn->height()))
 }
 
 
@@ -117,8 +123,9 @@ void EditorWidget::onShapeBtnClicked(){
     qDebug()<<"on shape btn clicked ";
     if(whichSubToolsVisible==0)
         return;
-    QVBoxLayout *shapeLayout = new QVBoxLayout();
-    shapeSubToolsLayout  = new QHBoxLayout();
+
+    removeOtherSubLayout(whichSubToolsVisible);
+    whichSubToolsVisible = 0;
     circleBtn = new QPushButton();
     QPixmap pixmapCircle(":/res/icons/ic_circle");
     QIcon circleIcon(pixmapCircle);
@@ -183,55 +190,55 @@ void EditorWidget::onShapeBtnClicked(){
     lineBtn->setFixedSize(shapeBtn->size().width()/1.1,shapeBtn->size().height()/1.5);
     lineBtn->setStyleSheet("margin-left: 3px;margin-right:30px");
 
-    shapeSubToolsLayout->addWidget(circleBtn);
-    shapeSubToolsLayout->addWidget(ovalBtn);
-    shapeSubToolsLayout->addWidget(squareBtn);
-    shapeSubToolsLayout->addWidget(rectangleBtn);
-    shapeSubToolsLayout->addWidget(triangleBtn);
-    shapeSubToolsLayout->addWidget(diamondBtn);
-    shapeSubToolsLayout->addWidget(parallelogramBtn);
-    shapeSubToolsLayout->addWidget(lineBtn);
-    shapeSubToolsLayout->addStretch(1);
+    subMainToolLayout->insertWidget(0,circleBtn);
+    subMainToolLayout->insertWidget(1,ovalBtn);
+    subMainToolLayout->insertWidget(2,squareBtn);
+    subMainToolLayout->insertWidget(3,rectangleBtn);
+    subMainToolLayout->insertWidget(4,triangleBtn);
+    subMainToolLayout->insertWidget(5,diamondBtn);
+    subMainToolLayout->insertWidget(6,parallelogramBtn);
+    subMainToolLayout->insertWidget(7,lineBtn);
+    subMainToolLayout->addStretch(1);
     //===================== shape tools ===================
-    deleteShapeBtn = new QPushButton("delete");
-    deleteShapeBtn->setVisible(false);
-    magnifyShapeBtn = new QPushButton("enlarge");
-    magnifyShapeBtn->setVisible(false);
-    minifyShapeBtn = new QPushButton("minify");
-    minifyShapeBtn->setVisible(false);
-    clockRotateShapeBtn = new  QPushButton("90 clock rotate");
-    clockRotateShapeBtn->setVisible(false);
-    horizantalShapeBtn = new QPushButton("horizantal shape");
-    horizantalShapeBtn->setVisible(false);
-    fillShapeBtn = new QPushButton("fill");
-    fillShapeBtn->setVisible(false);
-    shapeSelectToolLayout = new QHBoxLayout();
+//    deleteShapeBtn = new QPushButton("delete");
+//    deleteShapeBtn->setVisible(false);
+//    magnifyShapeBtn = new QPushButton("enlarge");
+//    magnifyShapeBtn->setVisible(false);
+//    minifyShapeBtn = new QPushButton("minify");
+//    minifyShapeBtn->setVisible(false);
+//    clockRotateShapeBtn = new  QPushButton("90 clock rotate");
+//    clockRotateShapeBtn->setVisible(false);
+//    horizantalShapeBtn = new QPushButton("horizantal shape");
+//    horizantalShapeBtn->setVisible(false);
+//    fillShapeBtn = new QPushButton("fill");
+//    fillShapeBtn->setVisible(false);
+//    shapeSelectToolLayout = new QHBoxLayout();
 
-    shapeSelectToolLayout->addWidget(fillShapeBtn);
-    shapeSelectToolLayout->addWidget(horizantalShapeBtn);
-    shapeSelectToolLayout->addWidget(clockRotateShapeBtn);
-    shapeSelectToolLayout->addWidget(magnifyShapeBtn);
-    shapeSelectToolLayout->addWidget(minifyShapeBtn);
-    shapeSelectToolLayout->addWidget(deleteShapeBtn);
-    //=====================================================
-    qDebug()<<"create shape layout";
-    if(whichSubToolsVisible==1){
-        delete sizeBtn;
-        delete fontBtn;
-        delete acceptTextBtn;
-        delete deleteBtn;
-        qDebug()<<"text btn delete ";
-        qDeleteAll(textSubToolsLayout->children());
-        qDebug()<<"text childeren delete ";
-        delete textSubToolsLayout;
-        qDebug()<<"text layout delete ";
-    }
+//    shapeSelectToolLayout->addWidget(fillShapeBtn);
+//    shapeSelectToolLayout->addWidget(horizantalShapeBtn);
+//    shapeSelectToolLayout->addWidget(clockRotateShapeBtn);
+//    shapeSelectToolLayout->addWidget(magnifyShapeBtn);
+//    shapeSelectToolLayout->addWidget(minifyShapeBtn);
+//    shapeSelectToolLayout->addWidget(deleteShapeBtn);
+//    //=====================================================
+//    qDebug()<<"create shape layout";
+//    if(whichSubToolsVisible==1){
+//        delete sizeBtn;
+//        delete fontBtn;
+//        delete acceptTextBtn;
+//        delete deleteBtn;
+//        qDebug()<<"text btn delete ";
+//        qDeleteAll(textSubToolsLayout->children());
+//        qDebug()<<"text childeren delete ";
+//        delete textSubToolsLayout;
+//        qDebug()<<"text layout delete ";
+//    }
 
-    shapeLayout->addItem(shapeSubToolsLayout);
-    shapeLayout->addItem(shapeSelectToolLayout);
-    widget->setLayout(shapeLayout);
-    widget->setStyleSheet("background-color:#D3D3D3;");
-    whichSubToolsVisible=0;
+//    shapeLayout->addItem(shapeSubToolsLayout);
+//    shapeLayout->addItem(shapeSelectToolLayout);
+//    widget->setLayout(shapeLayout);
+//    widget->setStyleSheet("background-color:#D3D3D3;");
+//    whichSubToolsVisible=0;
     connect(circleBtn,SIGNAL(released()),this,SLOT(circleClicked()));
     connect(rectangleBtn,SIGNAL(released()),this,SLOT(rectangleClicked()));
     connect(ovalBtn,SIGNAL(released()),this,SLOT(ovalClicked()));
@@ -242,44 +249,208 @@ void EditorWidget::onShapeBtnClicked(){
     connect(triangleBtn,SIGNAL(released()),this,SLOT(triangleClicked()));
 
 }
+//void EditorWidget::onShapeBtnClicked(){
 
+//    qDebug()<<"on shape btn clicked ";
+//    if(whichSubToolsVisible==0)
+//        return;
+//    QVBoxLayout *shapeLayout = new QVBoxLayout();
+//    shapeSubToolsLayout  = new QHBoxLayout();
+//    circleBtn = new QPushButton();
+//    QPixmap pixmapCircle(":/res/icons/ic_circle");
+//    QIcon circleIcon(pixmapCircle);
+//    circleBtn->setIcon(circleIcon);
+//    circleBtn->setIconSize(pixmapCircle.rect().size()/2);
+//    circleBtn->setFixedSize(shapeBtn->size().width()/1,shapeBtn->size().height()/1.5);
+//    circleBtn->setStyleSheet("margin-left: 3px;margin-right:30px");
+
+//    ovalBtn= new QPushButton();
+//    QPixmap pixmapOval(":/res/icons/ic_ellipse");
+//    QIcon ovalIcon(pixmapOval);
+//    ovalBtn->setIcon(ovalIcon);
+//    ovalBtn->setIconSize(pixmapOval.rect().size()/2);
+//    ovalBtn->setFixedSize(shapeBtn->size().width()/1.1,shapeBtn->size().height()/1.5);
+//    ovalBtn->setStyleSheet("margin-left: 3px;margin-right:30px");
+
+//    squareBtn= new QPushButton();
+//    QPixmap pixmapSquare(":/res/icons/ic_square");
+//    QIcon squareIcon(pixmapSquare);
+//    squareBtn->setIcon(squareIcon);
+//    squareBtn->setIconSize(pixmapSquare.rect().size()/2);
+//    squareBtn->setFixedSize(shapeBtn->size().width()/1.1,shapeBtn->size().height()/1.5);
+//    squareBtn->setStyleSheet("margin-left: 3px;margin-right:30px");
+
+//    rectangleBtn= new QPushButton();
+//    QPixmap pixmaprectangle(":/res/icons/ic_rectangle");
+//    QIcon rectangleIcon(pixmaprectangle);
+//    rectangleBtn->setIcon(rectangleIcon);
+//    rectangleBtn->setIconSize(pixmaprectangle.rect().size()/2);
+//    rectangleBtn->setFixedSize(shapeBtn->size().width()/1.1,shapeBtn->size().height()/1.5);
+//    rectangleBtn->setStyleSheet("margin-left: 3px;margin-right:30px");
+
+//    triangleBtn = new QPushButton();
+//    QPixmap pixmaptriangle(":/res/icons/ic_triangle");
+//    QIcon triangleIcon(pixmaptriangle);
+//    triangleBtn->setIcon(triangleIcon);
+//    triangleBtn->setIconSize(pixmaptriangle.rect().size()/2);
+//    triangleBtn->setFixedSize(shapeBtn->size().width()/1.1,shapeBtn->size().height()/1.5);
+//    triangleBtn->setStyleSheet("margin-left: 3px;margin-right:30px");
+
+//    diamondBtn = new QPushButton();
+//    QPixmap pixmapdiamond(":/res/icons/ic_diamonds");
+//    QIcon diamondIcon(pixmapdiamond);
+//    diamondBtn->setIcon(diamondIcon);
+//    diamondBtn->setIconSize(pixmapdiamond.rect().size()/2);
+//    diamondBtn->setFixedSize(shapeBtn->size().width()/1.1,shapeBtn->size().height()/1.5);
+//    diamondBtn->setStyleSheet("margin-left: 3px;margin-right:30px");
+
+//    parallelogramBtn = new QPushButton();
+//    QPixmap pixmapparallelogram(":/res/icons/ic_parallalogram");
+//    QIcon parallelogramIcon(pixmapparallelogram);
+//    parallelogramBtn->setIcon(parallelogramIcon);
+//    parallelogramBtn->setIconSize(pixmapparallelogram.rect().size()/2);
+//    parallelogramBtn->setFixedSize(shapeBtn->size().width()/1.1,shapeBtn->size().height()/1.5);
+//    parallelogramBtn->setStyleSheet("margin-left: 3px;margin-right:30px");
+
+//    lineBtn = new QPushButton();
+//    QPixmap pixmapline(":/res/icons/ic_line");
+//    QIcon lineIcon(pixmapline);
+//    lineBtn->setIcon(lineIcon);
+//    lineBtn->setIconSize(pixmapline.rect().size()/2);
+//    lineBtn->setFixedSize(shapeBtn->size().width()/1.1,shapeBtn->size().height()/1.5);
+//    lineBtn->setStyleSheet("margin-left: 3px;margin-right:30px");
+
+//    shapeSubToolsLayout->addWidget(circleBtn);
+//    shapeSubToolsLayout->addWidget(ovalBtn);
+//    shapeSubToolsLayout->addWidget(squareBtn);
+//    shapeSubToolsLayout->addWidget(rectangleBtn);
+//    shapeSubToolsLayout->addWidget(triangleBtn);
+//    shapeSubToolsLayout->addWidget(diamondBtn);
+//    shapeSubToolsLayout->addWidget(parallelogramBtn);
+//    shapeSubToolsLayout->addWidget(lineBtn);
+//    shapeSubToolsLayout->addStretch(1);
+//    //===================== shape tools ===================
+//    deleteShapeBtn = new QPushButton("delete");
+//    deleteShapeBtn->setVisible(false);
+//    magnifyShapeBtn = new QPushButton("enlarge");
+//    magnifyShapeBtn->setVisible(false);
+//    minifyShapeBtn = new QPushButton("minify");
+//    minifyShapeBtn->setVisible(false);
+//    clockRotateShapeBtn = new  QPushButton("90 clock rotate");
+//    clockRotateShapeBtn->setVisible(false);
+//    horizantalShapeBtn = new QPushButton("horizantal shape");
+//    horizantalShapeBtn->setVisible(false);
+//    fillShapeBtn = new QPushButton("fill");
+//    fillShapeBtn->setVisible(false);
+//    shapeSelectToolLayout = new QHBoxLayout();
+
+//    shapeSelectToolLayout->addWidget(fillShapeBtn);
+//    shapeSelectToolLayout->addWidget(horizantalShapeBtn);
+//    shapeSelectToolLayout->addWidget(clockRotateShapeBtn);
+//    shapeSelectToolLayout->addWidget(magnifyShapeBtn);
+//    shapeSelectToolLayout->addWidget(minifyShapeBtn);
+//    shapeSelectToolLayout->addWidget(deleteShapeBtn);
+//    //=====================================================
+//    qDebug()<<"create shape layout";
+//    if(whichSubToolsVisible==1){
+//        delete sizeBtn;
+//        delete fontBtn;
+//        delete acceptTextBtn;
+//        delete deleteBtn;
+//        qDebug()<<"text btn delete ";
+//        qDeleteAll(textSubToolsLayout->children());
+//        qDebug()<<"text childeren delete ";
+//        delete textSubToolsLayout;
+//        qDebug()<<"text layout delete ";
+//    }
+
+//    shapeLayout->addItem(shapeSubToolsLayout);
+//    shapeLayout->addItem(shapeSelectToolLayout);
+//    widget->setLayout(shapeLayout);
+//    widget->setStyleSheet("background-color:#D3D3D3;");
+//    whichSubToolsVisible=0;
+//    connect(circleBtn,SIGNAL(released()),this,SLOT(circleClicked()));
+//    connect(rectangleBtn,SIGNAL(released()),this,SLOT(rectangleClicked()));
+//    connect(ovalBtn,SIGNAL(released()),this,SLOT(ovalClicked()));
+//    connect(squareBtn,SIGNAL(released()),this,SLOT(squareClicked()));
+//    connect(lineBtn,SIGNAL(released()),this,SLOT(lineClicked()));
+//    connect(diamondBtn,SIGNAL(released()),this,SLOT(diamondClicked()));
+//    connect(parallelogramBtn,SIGNAL(released()),this,SLOT(parallelogramClicked()));
+//    connect(triangleBtn,SIGNAL(released()),this,SLOT(triangleClicked()));
+
+//}
 void EditorWidget::onTextBtnClicked(){
-    qDebug()<<"text clicked";
+    qDebug()<<"EditorWidget::onTextBtnClicked";
     if(whichSubToolsVisible==1)
         return;
-    textSubToolsLayout = new QHBoxLayout();
+    removeOtherSubLayout(whichSubToolsVisible);
+    whichSubToolsVisible = 1;
     fontBtn = new QPushButton("font");
     sizeBtn = new QPushButton("size");
-    acceptTextBtn = new QPushButton("accept");
-    deleteBtn = new QPushButton("delete");
-    textSubToolsLayout->addWidget(fontBtn);
-    textSubToolsLayout->addWidget(sizeBtn);
-    textSubToolsLayout->addWidget(acceptTextBtn);
-    textSubToolsLayout->addWidget(deleteBtn);
+    subMainToolLayout->insertWidget(0,fontBtn);
+    subMainToolLayout->insertWidget(1,sizeBtn);
 
-    qDebug()<<"create text layout";
+//    qDebug()<<"create text layout";
 
-    if(whichSubToolsVisible==0){
-        delete circleBtn;
-        delete rectangleBtn;
-        delete triangleBtn;
-        delete squareBtn;
-        delete lineBtn;
-        delete ovalBtn;
-        delete parallelogramBtn;
-        delete diamondBtn;
-        qDebug()<<"shape btn  delete ";
-        qDeleteAll(shapeSubToolsLayout->children());
-        qDebug()<<"shape childeren delete ";
-        delete shapeSubToolsLayout;
-        qDebug()<<"shape layout delete ";
-    }
+//    if(whichSubToolsVisible==0){
+//        delete circleBtn;
+//        delete rectangleBtn;
+//        delete triangleBtn;
+//        delete squareBtn;
+//        delete lineBtn;
+//        delete ovalBtn;
+//        delete parallelogramBtn;
+//        delete diamondBtn;
+//        qDebug()<<"shape btn  delete ";
+//        qDeleteAll(shapeSubToolsLayout->children());
+//        qDebug()<<"shape childeren delete ";
+//        delete shapeSubToolsLayout;
+//        qDebug()<<"shape layout delete ";
+//    }
 
-    widget->setLayout(textSubToolsLayout);
-    whichSubToolsVisible=1;
-    paintFrame->addTextItem(QPoint(20,20));
+//    widget->setLayout(textSubToolsLayout);
+//    whichSubToolsVisible=1;
+//    paintFrame->addTextItem(QPoint(20,20));
 
 }
+
+//void EditorWidget::onTextBtnClicked(){
+//    qDebug()<<"text clicked";
+//    if(whichSubToolsVisible==1)
+//        return;
+//    textSubToolsLayout = new QHBoxLayout();
+//    fontBtn = new QPushButton("font");
+//    sizeBtn = new QPushButton("size");
+//    acceptTextBtn = new QPushButton("accept");
+//    deleteBtn = new QPushButton("delete");
+//    textSubToolsLayout->addWidget(fontBtn);
+//    textSubToolsLayout->addWidget(sizeBtn);
+//    textSubToolsLayout->addWidget(acceptTextBtn);
+//    textSubToolsLayout->addWidget(deleteBtn);
+
+//    qDebug()<<"create text layout";
+
+//    if(whichSubToolsVisible==0){
+//        delete circleBtn;
+//        delete rectangleBtn;
+//        delete triangleBtn;
+//        delete squareBtn;
+//        delete lineBtn;
+//        delete ovalBtn;
+//        delete parallelogramBtn;
+//        delete diamondBtn;
+//        qDebug()<<"shape btn  delete ";
+//        qDeleteAll(shapeSubToolsLayout->children());
+//        qDebug()<<"shape childeren delete ";
+//        delete shapeSubToolsLayout;
+//        qDebug()<<"shape layout delete ";
+//    }
+
+//    widget->setLayout(textSubToolsLayout);
+//    whichSubToolsVisible=1;
+//    paintFrame->addTextItem(QPoint(20,20));
+
+//}
 
 void EditorWidget::onDateBtnClicked()
 {
@@ -297,6 +468,27 @@ void EditorWidget::onImageBtnClicked()
                                                     "C:/",
                                                     tr("Images (*.png *.jpg)"));
     paintFrame->addImage(QPointF(30,30),fileName);
+
+}
+
+void EditorWidget::removeOtherSubLayout(int whichSelect)
+{
+    if(whichSelect==0){
+        circleBtn->hide();
+        squareBtn->hide();
+        rectangleBtn->hide();
+        triangleBtn->hide();
+        diamondBtn->hide();
+        ovalBtn->hide();
+        parallelogramBtn->hide();
+        lineBtn->hide();
+    }else if(whichSelect==1){
+        fontBtn->hide();
+        sizeBtn->hide();
+    }
+    while(!subMainToolLayout->isEmpty()) {
+        delete subMainToolLayout->takeAt(0);
+    }
 
 }
 void EditorWidget::onBarcodeBtnClicked()

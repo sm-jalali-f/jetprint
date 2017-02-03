@@ -1,11 +1,10 @@
 #include "circleitem.h"
-#include <QtWidgets>
 
 CircleItem::CircleItem(QWidget *parent,int radius , QPointF center):DrawItem(),QGraphicsItem()
 {
     this->radius = radius;
     this->center = center;
-    setToolTip(QString("QColor(%1, %2, %3)\n%4")
+    this->setToolTip(QString("QColor(%1, %2, %3)\n%4")
                   .arg(color.red()).arg(color.green()).arg(color.blue())
                   .arg("Click and drag this color onto the robot!"));
     setCursor(Qt::OpenHandCursor);
@@ -20,9 +19,9 @@ void CircleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    scene()->setBackgroundBrush(shapeBgBrush);
+    this->scene()->setBackgroundBrush(shapeBgBrush);
     painter->setPen(shapePen);
-    painter->setOpacity(TRANSPARENT);
+    painter->setOpacity(Qt::transparent);
     painter->drawEllipse(center.x(),center.y(), radius, radius);
 
 }
@@ -31,7 +30,7 @@ void CircleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 QPixmap CircleItem::toPixmap()
 {
 
-    if (!scene()) {
+    if (!this->scene()) {
         qWarning() << "[ControlItem::toPixmap] scene is null.";
         return QPixmap();
     }
@@ -42,7 +41,7 @@ QPixmap CircleItem::toPixmap()
     QPainter painter(&pixmap);
     //painter.setBrush(QBrush(QColor(0, 0, 0, 0)));
     painter.drawRect(r);
-    scene()->render(&painter, QRectF(), sceneBoundingRect());
+    this->scene()->render(&painter, QRectF(), sceneBoundingRect());
     painter.end();
     return pixmap;
 }
@@ -71,10 +70,10 @@ void CircleItem::setPosition(int x, int y)
 
 void CircleItem::hideItem()
 {
-    this->hide();
+    hide();
 }
 
 void CircleItem::showItem()
 {
-    this->show();
+    show();
 }

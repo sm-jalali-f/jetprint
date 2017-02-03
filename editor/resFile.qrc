@@ -18,5 +18,8 @@
         <file>res/icons/ic_triangle.png</file>
         <file>res/icons/ic_app.png</file>
         <file>res/icons/ic_rotate.png</file>
+        <file>res/icons/ic_counter.png</file>
+        <file>res/icons/ic_date.png</file>
+        <file>res/icons/ic_time.png</file>
     </qresource>
 </RCC>

@@ -30,15 +30,16 @@ public slots:
 private :
     QPushButton *shapeBtn,*textbtn,*dateBtn,*barcodeBtn,*imageBtn,*undoBtn,*redoBtn,*saveBtn,*printBtn;
     QPushButton *circleBtn,*ovalBtn,*squareBtn,*rectangleBtn,*triangleBtn,*diamondBtn,*parallelogramBtn,*lineBtn;
-    QPushButton *fontBtn,*sizeBtn,*acceptTextBtn,*deleteBtn;
+    QPushButton *fontBtn,*sizeBtn;
     QWidget *widget;
     QVBoxLayout *verticalLayout,*printInfoLayout;
-    QHBoxLayout *mainToolsLayout,*shapeSubToolsLayout,*textSubToolsLayout;
+    QHBoxLayout *mainToolsLayout,*shapeSubToolsLayout,*textSubToolsLayout,*subMainToolLayout;
 
     QHBoxLayout *shapeSelectToolLayout;
     QPushButton *fillShapeBtn,*horizantalShapeBtn,*clockRotateShapeBtn,*deleteShapeBtn,*minifyShapeBtn,*magnifyShapeBtn;
 
     PaintFrame *paintFrame;
+    void removeOtherSubLayout(int whichSelect);
     int whichSubToolsVisible = -1; //shape =0 ,text =1 ,image = 2,barcode =3,time = 4,date=5,save=6,undo =7,redo=8,print=9
 public slots:
     void circleClicked();

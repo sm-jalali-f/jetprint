@@ -4,7 +4,7 @@
 #include <QGraphicsItem>
 #include <qdebug.h>
 #include <QMouseEvent>
-#include <drawitem.h>
+#include <paintItems/drawitem.h>
 class CircleItem : public QGraphicsItem,public DrawItem
 {
 

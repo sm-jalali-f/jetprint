@@ -33,7 +33,6 @@ SOURCES += main.cpp\
     paintItems/shapes/parallelogramitem.cpp \
     paintItems/dateitem.cpp \
     paintItems/myimageitem.cpp \
-#    eventDispatchers/paintframeeventdispatcher.cpp
     readport.cpp \
     actionHandler/paintaction.cpp \
     actionHandler/actionmanager.cpp \
@@ -46,7 +45,12 @@ SOURCES += main.cpp\
     types/printtype.cpp \
     paintItems/endpaintline.cpp \
     paintItems/verticalruler.cpp \
-    paintItems/horizontalruler.cpp
+    paintItems/horizontalruler.cpp \
+    neweditorwidget.cpp \
+    tabWidget/shapetabwidget.cpp \
+    tabWidget/inserttabwidget.cpp \
+    tabWidget/barcodetabwidget.cpp \
+    tabWidget/formattabwidget.cpp
 
 
 HEADERS  += \
@@ -64,7 +68,6 @@ HEADERS  += \
     paintItems/shapes/parallelogramitem.h \
     paintItems/dateitem.h \
     paintItems/myimageitem.h \
-#    eventDispatchers/paintframeeventdispatcher.h
     readport.h \
     actionHandler/paintaction.h \
     actionHandler/actionmanager.h \
@@ -77,7 +80,12 @@ HEADERS  += \
     types/printtype.h \
     paintItems/endpaintline.h \
     paintItems/verticalruler.h \
-    paintItems/horizontalruler.h
+    paintItems/horizontalruler.h \
+    neweditorwidget.h \
+    tabWidget/shapetabwidget.h \
+    tabWidget/inserttabwidget.h \
+    tabWidget/barcodetabwidget.h \
+    tabWidget/formattabwidget.h
 
 
 RESOURCES += \

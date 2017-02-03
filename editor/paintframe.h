@@ -62,7 +62,7 @@ protected:
     void dragMoveEvent(QDragMoveEvent *event);
 
 private:
-    int fixedWidth = 18*2*128;
+    int fixedWidth = 28*128;
     int fixedHeight = 6*128;
     int minimumEndLineX =100;
     int maximumEndLineX =fixedWidth-3;
