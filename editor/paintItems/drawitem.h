@@ -64,6 +64,7 @@ public:
                            , QPointF rightTop,QPointF leftBottom,QPointF rightBottom);
     void updateCornerPoint();
     DrawItemState getItemState();
+    void unSelect();
 protected:
     QPoint rotateClickedPos;
     const int IC_ROTATE_SIZE = 24;

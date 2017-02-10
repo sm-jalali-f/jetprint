@@ -2,6 +2,7 @@
 
 NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
 {
+    qDebug()<<"NewEditorWidget: NewEditorWidget: start";
     this->setWindowState(Qt::WindowFullScreen);
     QBoxLayout *mainLayout = new QVBoxLayout;
     QWidget *menuWidget = new QWidget;
@@ -117,11 +118,16 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
     companyVLayout->addWidget(websiteInfo);
     companyVLayout->addStretch();
     bottomLeftLayout->addWidget(companyWidget);
-
+    printWidthLabel = new QLabel("عرض چاپ:  ");
+    printHeightLabel = new QLabel("ارتفاع چاپ:  ۱۸ میلی متر");
     QLabel *infoLabel =new QLabel("گزارش های آنلاین شما:\nهزینه هر چاپ\nتعداد چاب در هر کارتریج\nتعداد پیکسل های چاپ\nطول و عرض چاپ\nتعداد چاپ های های اخیر از این پروژه\n");
+    printWidthLabel->setFont(QFont("Arial",18 ));
+    printHeightLabel->setFont(QFont("Arial",18 ));
     infoLabel->setFont(QFont("Arial",18 ));
     bottomRightLayout->addStretch();
     bottomRightLayout->setAlignment(Qt::AlignCenter);
+    bottomRightLayout->addWidget(printWidthLabel);
+    bottomRightLayout->addWidget(printHeightLabel);
     bottomRightLayout->addWidget(infoLabel);
     bottomRightLayout->addStretch();
 
@@ -159,6 +165,10 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
     connect(newProjectBtn,SIGNAL(clicked(bool)),this,SLOT(newProjectClicked()));
     connect(undoBtn,SIGNAL(clicked(bool)),this,SLOT(undoClicked()));
     connect(redoBtn,SIGNAL(clicked(bool)),this,SLOT(redoClicked()));
+    connect(mPaintframe, SIGNAL(paintFrameChanged(double,double)),
+                         this, SLOT(paintFrameChanged(double,double)));
+
+    qDebug()<<"NewEditorWidget: NewEditorWidget: finish";
 }
 
 void NewEditorWidget::addCircle()
@@ -206,6 +216,7 @@ void NewEditorWidget::printClicked()
 //    JetPrintWindow *printWin = new JetPrintWindow(this->mPaintframe->getPrintPixmap(),this->mPaintframe);
 //    printWin->show();
 //    this->close();
+    mPaintframe->unSelectAllItem();
 
     NewPrintWindow *printWindow = new NewPrintWindow(this->mPaintframe);// = new NewPrintWindow();
     printWindow->show();
@@ -241,5 +252,18 @@ void NewEditorWidget::undoClicked()
 void NewEditorWidget::redoClicked()
 {
 
+}
+
+void NewEditorWidget::paintFrameChanged(double width, double height)
+{
+    qDebug()<<"signaaaaaaaaaaaaaaaaaaaaaaaal width change";
+    QString widthStr = "عرض چاپ:   ";
+    widthStr.append(QString::number(width));
+    widthStr.append("میلی متر");
+    printWidthLabel->setText(widthStr);
+    QString heightStr = "ارتفاع چاپ:   ";
+    heightStr.append(QString::number(height));
+    heightStr.append("میلی متر");
+    printHeightLabel->setText(heightStr);
 }
 

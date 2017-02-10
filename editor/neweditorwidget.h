@@ -23,6 +23,9 @@ class NewEditorWidget: public QWidget
 public:
     explicit NewEditorWidget(QWidget *parent = 0);
 
+
+private:
+    int TAB_HEIGHT =250;
     ShapeTabWidget *mShapeTabWidget;
     InsertTabWidget *mInsertTabWidget;
     BarcodeTabWidget *mBarcodeTabWidget;
@@ -33,8 +36,7 @@ public:
     QPushButton *printBtn;
     QLabel *logoLabel,*websiteInfo;
     PaintFrame *mPaintframe;
-private:
-    int TAB_HEIGHT =250;
+    QLabel *printWidthLabel,*printHeightLabel;
 public slots:
     void addCircle();
     void addRectangle();
@@ -51,6 +53,7 @@ public slots:
     void newProjectClicked();
     void undoClicked();
     void redoClicked();
+    void paintFrameChanged(double width,double height);
 };
 
 #endif // NEWEDITORWIDGET_H

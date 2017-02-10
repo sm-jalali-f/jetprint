@@ -31,6 +31,10 @@ private:
     QPushButton *cancelBtn,*applyBtn,*okBtn;
     void loadSetting();
     void saveSetting();
+    QString SPEED_TYPE_KEY ="speedType";
+    QString INTERVAL_TYPE_KEY ="intervalType";
+    QString INTERVAL_TIME_KEY ="intervalTime";
+    QString SPEED_VALUE_KEY ="speedValue";
 
 public slots:
     void autoIntervalSelected();

@@ -3,6 +3,7 @@
 NewPrintWindow::NewPrintWindow(PaintFrame *frame,QWidget *parent ):
     QWidget(parent)
 {
+    mPrintHandler =new PrintHandler();
     this->mPaintFrame = frame;
     QPixmap previewPixmap = mPaintFrame->getPrintPixmap();
 
@@ -67,6 +68,16 @@ void NewPrintWindow::startStopClicked()
     }else{
         isPrinting =true;
         startStopBtn->setText("  Stop  ");
+//        mPrintHandler->setData(byteArray);
+//        mPrintHandler->setPrintInterval(printCommandIntervalEt->text().toLong());
+//        mPrintHandler->setSectorInterval(sectorIntervalEt->text().toLong());
+//        if(resultFrame->isDynamic()){
+//            mPrintHandler->setPrintMode(DYNAMIC);
+//            mPrintHandler->setPaintFrame(resultFrame,WIDTH_SCALED,HEIGHT_SCALED);
+//        }else{
+//            mPrintHandler->setPrintMode(STATIC);
+//        }
+//        mPrintHandler->run();
     }
 }
 
@@ -80,4 +91,6 @@ void NewPrintWindow::backToEditorClicked()
 {
     this->close();
 }
+
+
 

@@ -28,6 +28,7 @@
 
 class PaintFrame : public QGraphicsView
 {
+    Q_OBJECT
 public:
 
     PaintFrame(QWidget *parent = 0);
@@ -51,8 +52,10 @@ public:
     QPixmap toPixmap() ;
     QPixmap getPrintPixmap();// cut paint space from whole of paint frame
     bool isDynamic();
-
+    void unSelectAllItem();
     int RULER_WIDTH =40;
+signals:
+    void paintFrameChanged(double width,double height);
 protected:
     QVector<DrawItem*> itemList;
     void mousePressEvent(QMouseEvent *event);
@@ -65,8 +68,8 @@ protected:
 private:
 
 //    QRect printRect;
-    int fixedWidth = 28*128;
-    int fixedHeight = 6*128;
+    int fixedWidth = 28*64*2;
+    int fixedHeight = 9*64;
     int minimumEndLineX =100;
     int maximumEndLineX =fixedWidth-3;
     int endLineMargine =10;

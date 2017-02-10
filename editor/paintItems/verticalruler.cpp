@@ -1,11 +1,14 @@
 #include "verticalruler.h"
 
-VerticalRuler::VerticalRuler(QWidget *parent, int height, int interval,int rulerWidth)
+VerticalRuler::VerticalRuler(QWidget *parent, int height,int rulerWidth)
 {
-    this->interval = interval;
+
     this->heightRuler =height;
     this->longLineLength = rulerWidth;
     this->shortLineLength = rulerWidth/2;
+    interval = height/18;
+    lastLinePos.setX(longLineLength);
+    lastLinePos.setY(REAL_FIXED_HEIGHT*interval);
 }
 
 void VerticalRuler::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -29,12 +32,15 @@ void VerticalRuler::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
     painter->setPen(shapePen);
     painter->drawLine(longLineLength,0,longLineLength,heightRuler);
-    for(int i=0;i<heightRuler/interval;i++){
+    for(int i=0;i<REAL_FIXED_HEIGHT+1;i++){
         if(i%10==0){
             painter->drawLine(0,i*interval,longLineLength,i*interval);
         }else{
             painter->drawLine(shortLineLength,i*interval,2*shortLineLength,i*interval);
-
+        }
+        if(i==REAL_FIXED_HEIGHT){
+            lastLinePos.setX(longLineLength);
+            lastLinePos.setY(i*interval);
         }
 
     }
@@ -69,5 +75,15 @@ QRectF VerticalRuler::boundingRect() const
     int width = longLineLength;
     int height = this->heightRuler;
     return QRectF(0,0,width,height);
+}
+
+int VerticalRuler::getInterval()
+{
+    return interval;
+}
+
+QPoint VerticalRuler::getLastLine()
+{
+    return lastLinePos;
 }
 

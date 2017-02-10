@@ -222,6 +222,11 @@ DrawItemState DrawItem::getItemState()
     return itemState;
 }
 
+void DrawItem::unSelect()
+{
+    itemState=NOTHING_STATE;
+}
+
 bool DrawItem::isDrawBorder()
 {
     if(itemState==NOTHING_STATE || itemState == PREPARE_FOR_DRAGING

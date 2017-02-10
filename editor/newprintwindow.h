@@ -10,6 +10,8 @@
 #include "printsettingdialog.h"
 #include "paintframe.h"
 #include <QRect>
+#include <printhandler.h>
+
 class NewPrintWindow :public QWidget
 {
     Q_OBJECT
@@ -20,10 +22,12 @@ private:
     QPushButton *startStopBtn,*backToEditorBtn,*printSettingBtn;
     bool isPrinting=false;
     PaintFrame *mPaintFrame;
+    PrintHandler *mPrintHandler;
 public slots:
     void startStopClicked();
     void settingClicked();
     void backToEditorClicked();
+
 
 
 };

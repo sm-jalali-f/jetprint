@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_NewEditorWidget_t {
-    QByteArrayData data[17];
-    char stringdata0[208];
+    QByteArrayData data[20];
+    char stringdata0[239];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -45,7 +45,10 @@ QT_MOC_LITERAL(12, 135, 11), // "saveClicked"
 QT_MOC_LITERAL(13, 147, 18), // "openProjectClicked"
 QT_MOC_LITERAL(14, 166, 17), // "newProjectClicked"
 QT_MOC_LITERAL(15, 184, 11), // "undoClicked"
-QT_MOC_LITERAL(16, 196, 11) // "redoClicked"
+QT_MOC_LITERAL(16, 196, 11), // "redoClicked"
+QT_MOC_LITERAL(17, 208, 17), // "paintFrameChanged"
+QT_MOC_LITERAL(18, 226, 5), // "width"
+QT_MOC_LITERAL(19, 232, 6) // "height"
 
     },
     "NewEditorWidget\0addCircle\0\0addRectangle\0"
@@ -53,7 +56,8 @@ QT_MOC_LITERAL(16, 196, 11) // "redoClicked"
     "addDiamond\0addParallelogoram\0printClicked\0"
     "settingClicked\0saveClicked\0"
     "openProjectClicked\0newProjectClicked\0"
-    "undoClicked\0redoClicked"
+    "undoClicked\0redoClicked\0paintFrameChanged\0"
+    "width\0height"
 };
 #undef QT_MOC_LITERAL
 
@@ -63,7 +67,7 @@ static const uint qt_meta_data_NewEditorWidget[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      15,   14, // methods
+      16,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -71,21 +75,22 @@ static const uint qt_meta_data_NewEditorWidget[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   89,    2, 0x0a /* Public */,
-       3,    0,   90,    2, 0x0a /* Public */,
-       4,    0,   91,    2, 0x0a /* Public */,
-       5,    0,   92,    2, 0x0a /* Public */,
-       6,    0,   93,    2, 0x0a /* Public */,
-       7,    0,   94,    2, 0x0a /* Public */,
-       8,    0,   95,    2, 0x0a /* Public */,
-       9,    0,   96,    2, 0x0a /* Public */,
-      10,    0,   97,    2, 0x0a /* Public */,
-      11,    0,   98,    2, 0x0a /* Public */,
-      12,    0,   99,    2, 0x0a /* Public */,
-      13,    0,  100,    2, 0x0a /* Public */,
-      14,    0,  101,    2, 0x0a /* Public */,
-      15,    0,  102,    2, 0x0a /* Public */,
-      16,    0,  103,    2, 0x0a /* Public */,
+       1,    0,   94,    2, 0x0a /* Public */,
+       3,    0,   95,    2, 0x0a /* Public */,
+       4,    0,   96,    2, 0x0a /* Public */,
+       5,    0,   97,    2, 0x0a /* Public */,
+       6,    0,   98,    2, 0x0a /* Public */,
+       7,    0,   99,    2, 0x0a /* Public */,
+       8,    0,  100,    2, 0x0a /* Public */,
+       9,    0,  101,    2, 0x0a /* Public */,
+      10,    0,  102,    2, 0x0a /* Public */,
+      11,    0,  103,    2, 0x0a /* Public */,
+      12,    0,  104,    2, 0x0a /* Public */,
+      13,    0,  105,    2, 0x0a /* Public */,
+      14,    0,  106,    2, 0x0a /* Public */,
+      15,    0,  107,    2, 0x0a /* Public */,
+      16,    0,  108,    2, 0x0a /* Public */,
+      17,    2,  109,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -103,6 +108,7 @@ static const uint qt_meta_data_NewEditorWidget[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Double, QMetaType::Double,   18,   19,
 
        0        // eod
 };
@@ -128,10 +134,10 @@ void NewEditorWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 12: _t->newProjectClicked(); break;
         case 13: _t->undoClicked(); break;
         case 14: _t->redoClicked(); break;
+        case 15: _t->paintFrameChanged((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2]))); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObject NewEditorWidget::staticMetaObject = {
@@ -159,13 +165,13 @@ int NewEditorWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 15)
+        if (_id < 16)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 15;
+        _id -= 16;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 15)
+        if (_id < 16)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 15;
+        _id -= 16;
     }
     return _id;
 }

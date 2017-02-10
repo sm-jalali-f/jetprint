@@ -10,7 +10,7 @@
 class HorizontalRuler: public QGraphicsItem
 {
 public:
-    HorizontalRuler(QWidget *parent,int startX,int width,int height,int interval,int rulerWidth);
+    HorizontalRuler(QWidget *parent,int posX,int posY,int width,int interval,int rulerWidth);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QPoint getPosition();
     int getWidth() const;
@@ -18,11 +18,11 @@ public:
     QRectF boundingRect() const;
 private:
     int startX;
+    int startY;
     int widthRuler;
     int interval;
     int shortLineLength =20;
     int longLineLength =40;
-    int pageHeight;
 };
 
 #endif // HORIZONTALRULER_H

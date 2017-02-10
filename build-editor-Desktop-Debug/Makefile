@@ -88,6 +88,7 @@ SOURCES       = ../editor/main.cpp \
 		../editor/newprintwindow.cpp \
 		../editor/printsettingdialog.cpp qrc_resFile.cpp \
 		moc_editorwidget.cpp \
+		moc_paintframe.cpp \
 		moc_printwindow.cpp \
 		moc_printhandler.cpp \
 		moc_barcodeselectdialog.cpp \
@@ -139,6 +140,7 @@ OBJECTS       = main.o \
 		printsettingdialog.o \
 		qrc_resFile.o \
 		moc_editorwidget.o \
+		moc_paintframe.o \
 		moc_printwindow.o \
 		moc_printhandler.o \
 		moc_barcodeselectdialog.o \
@@ -543,9 +545,9 @@ qrc_resFile.cpp: ../editor/resFile.qrc \
 		../editor/res/icons/ic_print.png
 	/usr/lib/x86_64-linux-gnu/qt5/bin/rcc -name resFile ../editor/resFile.qrc -o qrc_resFile.cpp
 
-compiler_moc_header_make_all: moc_editorwidget.cpp moc_printwindow.cpp moc_printhandler.cpp moc_barcodeselectdialog.cpp moc_neweditorwidget.cpp moc_shapetabwidget.cpp moc_inserttabwidget.cpp moc_barcodetabwidget.cpp moc_formattabwidget.cpp moc_newprintwindow.cpp moc_printsettingdialog.cpp
+compiler_moc_header_make_all: moc_editorwidget.cpp moc_paintframe.cpp moc_printwindow.cpp moc_printhandler.cpp moc_barcodeselectdialog.cpp moc_neweditorwidget.cpp moc_shapetabwidget.cpp moc_inserttabwidget.cpp moc_barcodetabwidget.cpp moc_formattabwidget.cpp moc_newprintwindow.cpp moc_printsettingdialog.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_editorwidget.cpp moc_printwindow.cpp moc_printhandler.cpp moc_barcodeselectdialog.cpp moc_neweditorwidget.cpp moc_shapetabwidget.cpp moc_inserttabwidget.cpp moc_barcodetabwidget.cpp moc_formattabwidget.cpp moc_newprintwindow.cpp moc_printsettingdialog.cpp
+	-$(DEL_FILE) moc_editorwidget.cpp moc_paintframe.cpp moc_printwindow.cpp moc_printhandler.cpp moc_barcodeselectdialog.cpp moc_neweditorwidget.cpp moc_shapetabwidget.cpp moc_inserttabwidget.cpp moc_barcodetabwidget.cpp moc_formattabwidget.cpp moc_newprintwindow.cpp moc_printsettingdialog.cpp
 moc_editorwidget.cpp: ../editor/paintframe.h \
 		../editor/paintItems/shapes/circleitem.h \
 		../editor/paintItems/drawitem.h \
@@ -572,6 +574,27 @@ moc_editorwidget.cpp: ../editor/paintframe.h \
 		../editor/barcodeselectdialog.h \
 		../editor/editorwidget.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/mohamad/projects/qt/jetprinter/editor -I/home/mohamad/Downloads/packages/zint/build/backend_qt4 -I/home/mohamad/Downloads/packages/zint/build/backend -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtQuick -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtQml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../editor/editorwidget.h -o moc_editorwidget.cpp
+
+moc_paintframe.cpp: ../editor/paintItems/shapes/circleitem.h \
+		../editor/paintItems/drawitem.h \
+		../editor/types/drawitemtype.h \
+		../editor/types/mousemoveresult.h \
+		../editor/types/drawitemstate.h \
+		../editor/paintItems/shapes/rectangleitem.h \
+		../editor/paintItems/shapes/lineitem.h \
+		../editor/paintItems/shapes/triangleitem.h \
+		../editor/paintItems/shapes/ovalitem.h \
+		../editor/paintItems/shapes/diamonditem.h \
+		../editor/paintItems/shapes/parallelogramitem.h \
+		../editor/paintItems/dateitem.h \
+		../editor/paintItems/barcodeitem.h \
+		../editor/paintItems/myimageitem.h \
+		../editor/paintItems/textitem.h \
+		../editor/paintItems/endpaintline.h \
+		../editor/paintItems/verticalruler.h \
+		../editor/paintItems/horizontalruler.h \
+		../editor/paintframe.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/mohamad/projects/qt/jetprinter/editor -I/home/mohamad/Downloads/packages/zint/build/backend_qt4 -I/home/mohamad/Downloads/packages/zint/build/backend -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtQuick -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtQml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../editor/paintframe.h -o moc_paintframe.cpp
 
 moc_printwindow.cpp: ../editor/paintframe.h \
 		../editor/paintItems/shapes/circleitem.h \
@@ -675,6 +698,25 @@ moc_formattabwidget.cpp: ../editor/tabWidget/formattabwidget.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/mohamad/projects/qt/jetprinter/editor -I/home/mohamad/Downloads/packages/zint/build/backend_qt4 -I/home/mohamad/Downloads/packages/zint/build/backend -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtQuick -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtQml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../editor/tabWidget/formattabwidget.h -o moc_formattabwidget.cpp
 
 moc_newprintwindow.cpp: ../editor/printsettingdialog.h \
+		../editor/paintframe.h \
+		../editor/paintItems/shapes/circleitem.h \
+		../editor/paintItems/drawitem.h \
+		../editor/types/drawitemtype.h \
+		../editor/types/mousemoveresult.h \
+		../editor/types/drawitemstate.h \
+		../editor/paintItems/shapes/rectangleitem.h \
+		../editor/paintItems/shapes/lineitem.h \
+		../editor/paintItems/shapes/triangleitem.h \
+		../editor/paintItems/shapes/ovalitem.h \
+		../editor/paintItems/shapes/diamonditem.h \
+		../editor/paintItems/shapes/parallelogramitem.h \
+		../editor/paintItems/dateitem.h \
+		../editor/paintItems/barcodeitem.h \
+		../editor/paintItems/myimageitem.h \
+		../editor/paintItems/textitem.h \
+		../editor/paintItems/endpaintline.h \
+		../editor/paintItems/verticalruler.h \
+		../editor/paintItems/horizontalruler.h \
 		../editor/newprintwindow.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/mohamad/projects/qt/jetprinter/editor -I/home/mohamad/Downloads/packages/zint/build/backend_qt4 -I/home/mohamad/Downloads/packages/zint/build/backend -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtQuick -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtQml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../editor/newprintwindow.h -o moc_newprintwindow.cpp
 
@@ -1013,7 +1055,26 @@ timedatewidget.o: ../editor/settingDialog/timedatewidget.cpp ../editor/settingDi
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o timedatewidget.o ../editor/settingDialog/timedatewidget.cpp
 
 newprintwindow.o: ../editor/newprintwindow.cpp ../editor/newprintwindow.h \
-		../editor/printsettingdialog.h
+		../editor/printsettingdialog.h \
+		../editor/paintframe.h \
+		../editor/paintItems/shapes/circleitem.h \
+		../editor/paintItems/drawitem.h \
+		../editor/types/drawitemtype.h \
+		../editor/types/mousemoveresult.h \
+		../editor/types/drawitemstate.h \
+		../editor/paintItems/shapes/rectangleitem.h \
+		../editor/paintItems/shapes/lineitem.h \
+		../editor/paintItems/shapes/triangleitem.h \
+		../editor/paintItems/shapes/ovalitem.h \
+		../editor/paintItems/shapes/diamonditem.h \
+		../editor/paintItems/shapes/parallelogramitem.h \
+		../editor/paintItems/dateitem.h \
+		../editor/paintItems/barcodeitem.h \
+		../editor/paintItems/myimageitem.h \
+		../editor/paintItems/textitem.h \
+		../editor/paintItems/endpaintline.h \
+		../editor/paintItems/verticalruler.h \
+		../editor/paintItems/horizontalruler.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o newprintwindow.o ../editor/newprintwindow.cpp
 
 printsettingdialog.o: ../editor/printsettingdialog.cpp ../editor/printsettingdialog.h
@@ -1024,6 +1085,9 @@ qrc_resFile.o: qrc_resFile.cpp
 
 moc_editorwidget.o: moc_editorwidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_editorwidget.o moc_editorwidget.cpp
+
+moc_paintframe.o: moc_paintframe.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_paintframe.o moc_paintframe.cpp
 
 moc_printwindow.o: moc_printwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_printwindow.o moc_printwindow.cpp

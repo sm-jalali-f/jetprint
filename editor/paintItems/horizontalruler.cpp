@@ -1,13 +1,14 @@
 #include "horizontalruler.h"
 
-HorizontalRuler::HorizontalRuler(QWidget *parent, int startX,int width,int height, int interval,int rulerWidth)
+HorizontalRuler::HorizontalRuler(QWidget *parent,int posX,int posY,int width, int interval,int rulerWidth)
 {
     this->widthRuler =width;
-    this->startX =startX;
+    this->startX =posX;
+    this->startY =posY;
     this->setX(startX);
-    this->setY(height-longLineLength);
+    this->setY(startY);
+//    qDebug()<<"HorizontalRuler: y="<<startY;
     this->interval =interval;
-    this->pageHeight =height;
     this->longLineLength = rulerWidth;
     this->shortLineLength = rulerWidth/2;
 }

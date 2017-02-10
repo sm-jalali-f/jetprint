@@ -17,16 +17,18 @@ PaintFrame::PaintFrame(QWidget *parent) : QGraphicsView(parent)
     this->ensureVisible(0,0,fixedWidth,fixedHeight,0,0);
     this->setBackgroundBrush(QColor(255, 255, 255));
     scene->setBackgroundBrush(QColor(100,102,123));
+
+    scene->addItem(endLineDivider);
+    endLineDivider->show();
     drawDividerLine(minimumEndLineX);
-    vRuler = new VerticalRuler(this,fixedHeight,10,RULER_WIDTH);
-    hRuler = new HorizontalRuler(this,vRuler->getWidth(),fixedWidth-vRuler->getWidth(),fixedHeight,10,RULER_WIDTH);
-    vRuler->setHeightRuler(fixedHeight-hRuler->getHeight());
+    vRuler = new VerticalRuler(this,fixedHeight-RULER_WIDTH,RULER_WIDTH);
     scene->addItem(vRuler);
     vRuler->show();
+    this->show();
+    hRuler = new HorizontalRuler(this,RULER_WIDTH,vRuler->getLastLine().y(),fixedWidth-RULER_WIDTH,vRuler->getInterval(),fixedHeight-vRuler->getLastLine().y());
     scene->addItem(hRuler);
     hRuler->show();
-    this->show();
-//    printRect.setRect();
+
 }
 
 void PaintFrame::addBarcode(QPointF position,int width,int height)
@@ -162,10 +164,17 @@ void PaintFrame::drawDividerLine(int x)
         firstCall= true;
     }
     endLineDivider->setXPos(x);
-    if(firstCall){
-        scene->addItem(endLineDivider);
-        endLineDivider->show();
-//        itemList.append(text);
+    if(vRuler->getInterval()!=0){
+        double tempWidth = 1.0;
+        qDebug()<<"PaintFrame drawDividerLine tempwidth="<<tempWidth;
+        tempWidth = (endLinePosX-RULER_WIDTH);
+        qDebug()<<"PaintFrame drawDividerLine tempwidth="<<tempWidth;
+        tempWidth = tempWidth/vRuler->getInterval();
+        qDebug()<<"PaintFrame drawDividerLine tempwidth="<<tempWidth;
+        double tempHeight = 1.0*vRuler->REAL_FIXED_HEIGHT;
+        qDebug()<<"PaintFrame drawDividerLine tempwidth="<<tempWidth;
+        emit paintFrameChanged(tempWidth,tempHeight);
+        qDebug()<<"PaintFrame drawDividerLine tempwidth="<<tempWidth;
     }
 
 }
@@ -175,8 +184,8 @@ int PaintFrame::findEndPaint()
     int x = minimumEndLineX;
     //find max x of all item
     for(int i=0;i<itemList.size();i++){
-        qDebug()<<"PaintFrame: findEndPaint.item.x= "<<itemList.at(i)->getPosition().x();
-        qDebug()<<"PaintFrame: findEndPaint.item.width= "<<itemList.at(i)->boundingRect();
+//        qDebug()<<"PaintFrame: findEndPaint.item.x= "<<itemList.at(i)->getPosition().x();
+//        qDebug()<<"PaintFrame: findEndPaint.item.width= "<<itemList.at(i)->boundingRect();
         if(itemList.at(i)->getPosition().x() > x ){
             x =itemList.at(i)->getPosition().x() ;
         }
@@ -184,7 +193,7 @@ int PaintFrame::findEndPaint()
             x =itemList.at(i)->getPosition().x() +itemList.at(i)->getWidth();
         }
     }
-    qDebug()<<"PaintFrame: findEndPaint.endline.x= "<<x;
+//    qDebug()<<"PaintFrame: findEndPaint.endline.x= "<<x;
     //if x grater than width of paintframe :
     x += endLineMargine;
     if(x>maximumEndLineX)
@@ -224,13 +233,20 @@ QPixmap PaintFrame::toPixmap()
 
 QPixmap PaintFrame::getPrintPixmap()
 {
-    return QPixmap::grabWidget(this,RULER_WIDTH+3,1,endLinePosX-RULER_WIDTH-3,fixedHeight-RULER_WIDTH-1);
+    return QPixmap::grabWidget(this,RULER_WIDTH+3,1,endLinePosX-RULER_WIDTH-3,fixedHeight-hRuler->getHeight()-1);
 
 }
 
 bool PaintFrame::isDynamic()
 {
     return hasDynamicItem;
+}
+
+void PaintFrame::unSelectAllItem()
+{
+    for(int i=0;i<itemList.size();i++){
+        itemList.at(i)->unSelect();
+    }
 }
 
 void PaintFrame::mousePressEvent(QMouseEvent *event)
