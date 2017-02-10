@@ -1,6 +1,6 @@
 #include "horizontalruler.h"
 
-HorizontalRuler::HorizontalRuler(QWidget *parent, int startX,int width,int height, int interval)
+HorizontalRuler::HorizontalRuler(QWidget *parent, int startX,int width,int height, int interval,int rulerWidth)
 {
     this->widthRuler =width;
     this->startX =startX;
@@ -8,6 +8,8 @@ HorizontalRuler::HorizontalRuler(QWidget *parent, int startX,int width,int heigh
     this->setY(height-longLineLength);
     this->interval =interval;
     this->pageHeight =height;
+    this->longLineLength = rulerWidth;
+    this->shortLineLength = rulerWidth/2;
 }
 
 void HorizontalRuler::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

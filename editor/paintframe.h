@@ -47,11 +47,12 @@ public:
     void addTextItem(QPointF point);
     void keyPressEvent(QKeyEvent *event);
 
-    int findEndPaint();
-    void drawDividerLine(int x);
+
     QPixmap toPixmap() ;
-    QPixmap getPrintPixmap();
+    QPixmap getPrintPixmap();// cut paint space from whole of paint frame
     bool isDynamic();
+
+    int RULER_WIDTH =40;
 protected:
     QVector<DrawItem*> itemList;
     void mousePressEvent(QMouseEvent *event);
@@ -62,6 +63,8 @@ protected:
     void dragMoveEvent(QDragMoveEvent *event);
 
 private:
+
+//    QRect printRect;
     int fixedWidth = 28*128;
     int fixedHeight = 6*128;
     int minimumEndLineX =100;
@@ -76,8 +79,11 @@ private:
     int insideX,insideY; // for handle where point of object pressed , so when drop in best point of page
 
     void updateCursor(MouseMoveResult type);
+
     VerticalRuler *vRuler;
     HorizontalRuler *hRuler;
+    int findEndPaint();
+    void drawDividerLine(int x);
 
 };
 

@@ -2,6 +2,64 @@
 
 NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
 {
+    this->setWindowState(Qt::WindowFullScreen);
+    QBoxLayout *mainLayout = new QVBoxLayout;
+    QWidget *menuWidget = new QWidget;
+    QHBoxLayout *menuLaout = new QHBoxLayout(menuWidget);
+    settingBtn = new QPushButton();
+    saveBtn = new QPushButton();
+    newProjectBtn = new QPushButton();
+    openProjectBtn = new QPushButton();
+    undoBtn = new QPushButton();
+    redoBtn = new QPushButton();
+
+    QPixmap pixmapSetting(":/res/icons/ic_setting");
+    QPixmap pixmapSave(":/res/icons/ic_save");
+    QPixmap pixmapNewProject(":/res/icons/ic_new_project");
+    QPixmap pixmapOpenProject(":/res/icons/ic_open");
+    QPixmap pixmapUndo(":/res/icons/ic_undo");
+    QPixmap pixmaRedo(":/res/icons/ic_redo");
+
+    QIcon settingIcon(pixmapSetting);
+    QIcon saveIcon(pixmapSave);
+    QIcon newProjectIcon(pixmapNewProject);
+    QIcon openProjectIcon(pixmapOpenProject);
+    QIcon undoIcon(pixmapUndo);
+    QIcon redoIcon(pixmaRedo);
+
+    settingBtn->setIcon(settingIcon);
+    saveBtn->setIcon(saveIcon);
+    newProjectBtn->setIcon(newProjectIcon);
+    openProjectBtn->setIcon(openProjectIcon);
+    undoBtn->setIcon(undoIcon);
+    redoBtn->setIcon(redoIcon);
+
+    settingBtn->setIconSize(pixmapSetting.rect().size()/8);
+    saveBtn->setIconSize(pixmapSave.rect().size()/8);
+    newProjectBtn->setIconSize(pixmapNewProject.rect().size()/8);
+    openProjectBtn->setIconSize(pixmapOpenProject.rect().size()/8);
+    undoBtn->setIconSize(pixmapUndo.rect().size()/2);
+    redoBtn->setIconSize(pixmaRedo.rect().size()/2);
+
+    settingBtn->setFixedSize(pixmapSetting.rect().size().height()/8,pixmapSetting.rect().size().height()/8);
+    saveBtn->setFixedSize(pixmapSetting.rect().size().height()/8,pixmapSetting.rect().size().height()/8);
+    newProjectBtn->setFixedSize(pixmapSetting.rect().size().height()/8,pixmapSetting.rect().size().height()/8);
+    openProjectBtn->setFixedSize(pixmapSetting.rect().size().height()/8,pixmapSetting.rect().size().height()/8);
+    undoBtn->setFixedSize(pixmapSetting.rect().size().height()/8,pixmapSetting.rect().size().height()/8);
+    redoBtn->setFixedSize(pixmapSetting.rect().size().height()/8,pixmapSetting.rect().size().height()/8);
+
+    menuLaout->addWidget(saveBtn);
+    menuLaout->addWidget(settingBtn);
+    menuLaout->addStretch(1);
+    menuLaout->addWidget(newProjectBtn);
+    menuLaout->addWidget(openProjectBtn);
+
+    menuLaout->addStretch(1);
+    menuLaout->addWidget(undoBtn);
+    menuLaout->addWidget(redoBtn);
+    menuLaout->addStretch(40);
+    mainLayout->addWidget(menuWidget);
+
 //    this->setStyleSheet("background-color:#e0e0d1");
     tabWidget = new QTabWidget;
 //    tabWidget->tabBar()->setStyleSheet("color:red;background-color:#e0e0eb");
@@ -14,9 +72,10 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
     tabWidget->addTab(mInsertTabWidget,tr("  Insert  "));
     tabWidget->addTab(mBarcodeTabWidget, tr(" Barcode "));
     tabWidget->addTab(mFormatTabWidget, tr("   Format   "));
-    QBoxLayout *mainLayout = new QVBoxLayout;
+
     mainLayout->addWidget(tabWidget);
-    mainLayout->addWidget(new PaintFrame);
+    mPaintframe = new PaintFrame;
+    mainLayout->addWidget(mPaintframe);
 
     QWidget *bottomWidget = new QWidget;
     QWidget *bottomLeftWidget = new QWidget;
@@ -74,7 +133,113 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
     tabWidget->setFixedHeight(TAB_HEIGHT);
     setLayout(mainLayout);
     printBtn->setStyleSheet("border-style:None;");
+    connect(printBtn,SIGNAL(clicked(bool)),this,SLOT(printClicked()));
     printWidget->setStyleSheet("border-style:None;");
 //    tabWidget->setCurrentIndex(3);
+    QObject::connect(mShapeTabWidget, SIGNAL(circleBtnClicked()),
+                         this, SLOT(addCircle()));
+    QObject::connect(mShapeTabWidget, SIGNAL(rectangleBtnClicked()),
+                         this, SLOT(addRectangle()));
+    QObject::connect(mShapeTabWidget, SIGNAL(squareBtnClicked()),
+                         this, SLOT(addSquare()));
+    QObject::connect(mShapeTabWidget, SIGNAL(lineBtnClicked()),
+                         this, SLOT(addLine()));
+    QObject::connect(mShapeTabWidget, SIGNAL(triangleBtnClicked()),
+                         this, SLOT(addTriangle()));
+    QObject::connect(mShapeTabWidget, SIGNAL(ovalBtnClicked()),
+                         this, SLOT(addOval()));
+    QObject::connect(mShapeTabWidget, SIGNAL(diamondBtnClicked()),
+                         this, SLOT(addDiamond()));
+    QObject::connect(mShapeTabWidget, SIGNAL(parallelogramBtnClicked()),
+                     this, SLOT(addParallelogoram()));
+
+    connect(settingBtn,SIGNAL(clicked(bool)),this,SLOT(settingClicked()));
+    connect(saveBtn,SIGNAL(clicked(bool)),this,SLOT(saveClicked()));
+    connect(openProjectBtn,SIGNAL(clicked(bool)),this,SLOT(openProjectClicked()));
+    connect(newProjectBtn,SIGNAL(clicked(bool)),this,SLOT(newProjectClicked()));
+    connect(undoBtn,SIGNAL(clicked(bool)),this,SLOT(undoClicked()));
+    connect(redoBtn,SIGNAL(clicked(bool)),this,SLOT(redoClicked()));
+}
+
+void NewEditorWidget::addCircle()
+{
+    mPaintframe->addCircle(QPointF(20,50),90);
+}
+
+void NewEditorWidget::addRectangle()
+{
+    mPaintframe->addRectangle(QPointF(50,50),240,80);
+}
+
+void NewEditorWidget::addSquare()
+{
+    mPaintframe->addSquare(QPointF(75,50),80);
+}
+
+void NewEditorWidget::addLine()
+{
+    mPaintframe->addLine(QPointF(10,10),QPointF(40,40));
+}
+
+void NewEditorWidget::addTriangle()
+{
+    mPaintframe->addTriangle(QPointF(50,10),QPointF(20,50),QPointF(80,50));
+}
+
+void NewEditorWidget::addOval()
+{
+    mPaintframe->addOval(QPointF(64,64),60,20);
+}
+
+void NewEditorWidget::addDiamond()
+{
+    mPaintframe->addDiamond(QPointF(50,10),50,20);
+}
+
+void NewEditorWidget::addParallelogoram()
+{
+    mPaintframe->addParallelogram(QPointF(50,10),90,30,75);
+}
+
+void NewEditorWidget::printClicked()
+{
+//    JetPrintWindow *printWin = new JetPrintWindow(this->mPaintframe->getPrintPixmap(),this->mPaintframe);
+//    printWin->show();
+//    this->close();
+
+    NewPrintWindow *printWindow = new NewPrintWindow(this->mPaintframe);// = new NewPrintWindow();
+    printWindow->show();
+}
+
+void NewEditorWidget::settingClicked()
+{
+    SettingDialog *dialog = new SettingDialog;
+    dialog->setAcceptDrops(false);
+    dialog->exec();
+}
+
+void NewEditorWidget::saveClicked()
+{
+
+}
+
+void NewEditorWidget::openProjectClicked()
+{
+
+}
+
+void NewEditorWidget::newProjectClicked()
+{
+
+}
+
+void NewEditorWidget::undoClicked()
+{
+
+}
+
+void NewEditorWidget::redoClicked()
+{
+
 }
 

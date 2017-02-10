@@ -24,6 +24,17 @@ public slots:
     void diamondClicked();
     void parallelogramClicked();
 
+signals:
+    void circleBtnClicked();
+    void rectangleBtnClicked();
+    void squareBtnClicked();
+    void lineBtnClicked();
+
+    void triangleBtnClicked();
+    void ovalBtnClicked();
+    void diamondBtnClicked();
+    void parallelogramBtnClicked();
+
 };
 
 #endif // SHAPETABWIDGET_H

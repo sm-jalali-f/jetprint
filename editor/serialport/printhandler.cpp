@@ -5,7 +5,7 @@ PrintHandler::PrintHandler()
     serialPort = new QSerialPort();
     scanSerialPort();
     qint32 myBaudrate = 921600;
-    setupSerialPort("ttyUSB1",myBaudrate,"Data8","NoFlowControl","NoParity","OneStop",QSerialPort::ReadWrite);
+    setupSerialPort("ttyUSB0",myBaudrate,"Data8","NoFlowControl","NoParity","OneStop",QSerialPort::ReadWrite);
 
 //    readTimer = new QTimer();
 //    connect(readTimer, SIGNAL(timeout()),this, SLOT(readFromPort()));
@@ -45,7 +45,13 @@ void PrintHandler::printPeriodicManualStaticData(long miliSecondInterval
     this->printInterval = miliSecondInterval;
     resetPointersCommand();
     setSectorIntervalCommand(sectorMicroSecondInterval);
-    writeDataCommand(data);
+    QByteArray tempData;
+    tempData.append("0123456789123456");
+    tempData.append("0123456789123456");
+    tempData.append("0123456789123456");
+    tempData.append("0123456789123456");
+    tempData.append("0123456789123456");
+    writeDataCommand(tempData);
     normalPrintCommand();
     isPrint =true;
     qDebug()<<"PrintHandler: printPeriodicManualStaticData finish";
@@ -101,13 +107,13 @@ char PrintHandler:: QStringToByte(QString s)    //s is 8 bits
   return (char)(s.left( 8 ).toInt( &ok, 2 ));
 }
 void PrintHandler::writeDataCommand(QByteArray data){
-//    qDebug()<<"PrintHandler: writeData call";
-//    QByteArray data;
     int length = data.size();
     qDebug()<<"PrintHandler: writeData data.length="<<length;
 
-    if(length%BYTE_COUNT_OF_SECTOR!=0)
+    if(length%BYTE_COUNT_OF_SECTOR!=0){
+        qDebug()<<"ppppppppppppppppppppppppppppppppppppppppppppppppppppp";
         return;
+    }
 //    qDebug()<<"PrintHandler: writeData zaribi az 16";
     QByteArray frame;
     int frameNumber=1;
@@ -115,18 +121,9 @@ void PrintHandler::writeDataCommand(QByteArray data){
         frame.append(data.at(i));
         if( (i%MAX_FRAME_SIZE==(MAX_FRAME_SIZE-1))){ //if  frame full
                 writeInPort(frame);
-//                QByteArray enter;
-//                enter.append(0x0A);
-//                enter.append(0x0D);
-//                writeInPort(enter);
-//                qDebug()<<"PrintHandler: writeDataCommand() : frameSize="<<frame.size();
-//                qDebug()<<"PrintHandler: writeData frame id="<<i;
                 frame.clear();
                 frameNumber+=1;
-//                qDebug()<<"PrintHandler: writeDataCommand() : frameNumber="<<frameNumber;
-
                 QString tempStr = frame;
-//                qDebug()<<"PrintHandler: writeDataCommand() : frame="<<tempStr;
 
         }else if(i==length-1){//if last Frame
             char zeroByte = 0x00;
@@ -146,8 +143,6 @@ void PrintHandler::setPaintFrame( PaintFrame *frame,int width,int height)
 void PrintHandler::pausePrint()
 {
     qDebug()<<"PrintHandler: pausePrint: print mode=" <<printMode;
-
-
     if( printMode == STATIC  ){
         isPrint =false;
         qDebug()<<"PrintHandler: pausePrint: mode 2";
@@ -215,11 +210,10 @@ void PrintHandler::resetPointersCommand()
 }
 void PrintHandler::normalPrintCommand(){
 
-//    qDebug()<<"PrintHandler: normalPrint(); queue size:"<<writeQueue.size();
-     QByteArray command;
+    qDebug()<<"PrintHandler: normalPrint(); queue size:"<<writeQueue.size();
+    QByteArray command;
     command.append("s000");
     writeInPort(command);
-
 
 }
 void PrintHandler::setManualPrintCommand(){
@@ -233,7 +227,6 @@ void PrintHandler::setSectorIntervalCommand(long microSecond){
 
     QByteArray command ;//=QByteArray::number(microSecond);
     command.append("t");
-//    command.append("0");
     unsigned char x2 = (int)0;
     unsigned char x0 = (int)0;
     unsigned char x1 = (int)0;
@@ -242,7 +235,6 @@ void PrintHandler::setSectorIntervalCommand(long microSecond){
         if((int)x0 == 0){
             x1+=1;
             if((int)x1 == 0){
-//                qDebug()<<"PrintHandler: setSectorInterval *****************************************";
                 x2+=1;
             }
         }
@@ -250,11 +242,7 @@ void PrintHandler::setSectorIntervalCommand(long microSecond){
     command.append(x2);
     command.append(x1);
     command.append(x0);
-//    qDebug()<<"PrintHandler: setSectorInterval x0="<<(int)x0;
-//    qDebug()<<"PrintHandler: setSectorInterval x1="<<(int)x1;
-//    qDebug()<<"PrintHandler: setSectorInterval x2="<<(int)x2;
-//    qDebug()<<"PrintHandler: setSectorInterval =" <<command;
-//    writeInPort(command);
+    writeInPort(command);
 }
 //============================ port handler ===============================
 void PrintHandler::readFromPort(){
@@ -265,17 +253,18 @@ void PrintHandler::readFromPort(){
 //        qDebug()<< "PrintHandler:readFromPort: not input ";
         return;
     }
-//        qDebug()<<"PrintHandler: readFromPort() size= "<<lastDataReaded.size();
+        qDebug()<<"PrintHandler: readFromPort() size= "<<lastDataReaded.size();
 //        qDebug()<<"PrintHandler: readFromPort() data= "<<lastDataReaded.toHex();
     int remainCount =-1;
     char zeroByte = 0x00;
 //    qDebug()<< "read byte = "<<lastDataReaded[lastDataReaded.size()-1];
     if(!isPrint)
         return;
-    qDebug()<< "read byte ================== "<<QString::number(lastDataReaded[lastDataReaded.size()-1]);
+//    qDebug()<< "read byte ================== "<<QString::number(lastDataReaded[lastDataReaded.size()-1]);
 
     if(printMode == STATIC){
         for(int i=0;i<lastDataReaded.size();i++){
+            qDebug()<< "read byte [ "<<i<<"]="<<QString::number(lastDataReaded[i]);
             if(lastDataReaded.at(lastDataReaded.size()-1) == zeroByte && isSeenZero==false){
                 isSeenZero =true;
                 this->printCount +=1;
@@ -287,6 +276,10 @@ void PrintHandler::readFromPort(){
                     return;
                 }
             }
+            if(lastDataReaded.at(lastDataReaded.size()-1) != zeroByte && isSeenZero==true){
+                isSeenZero =false;
+            }
+
         }
     }else if(printMode == DYNAMIC){
         //age 0 did

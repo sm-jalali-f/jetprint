@@ -1,9 +1,11 @@
 #include "verticalruler.h"
 
-VerticalRuler::VerticalRuler(QWidget *parent, int height, int interval)
+VerticalRuler::VerticalRuler(QWidget *parent, int height, int interval,int rulerWidth)
 {
     this->interval = interval;
     this->heightRuler =height;
+    this->longLineLength = rulerWidth;
+    this->shortLineLength = rulerWidth/2;
 }
 
 void VerticalRuler::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

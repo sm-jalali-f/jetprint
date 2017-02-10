@@ -50,7 +50,13 @@ SOURCES += main.cpp\
     tabWidget/shapetabwidget.cpp \
     tabWidget/inserttabwidget.cpp \
     tabWidget/barcodetabwidget.cpp \
-    tabWidget/formattabwidget.cpp
+    tabWidget/formattabwidget.cpp \
+    settingDialog/settingdialog.cpp \
+    settingDialog/generaltabwidget.cpp \
+    settingDialog/networktabwidget.cpp \
+    settingDialog/timedatewidget.cpp \
+    newprintwindow.cpp \
+    printsettingdialog.cpp
 
 
 HEADERS  += \
@@ -85,7 +91,13 @@ HEADERS  += \
     tabWidget/shapetabwidget.h \
     tabWidget/inserttabwidget.h \
     tabWidget/barcodetabwidget.h \
-    tabWidget/formattabwidget.h
+    tabWidget/formattabwidget.h \
+    settingDialog/settingdialog.h \
+    settingDialog/generaltabwidget.h \
+    settingDialog/networktabwidget.h \
+    settingDialog/timedatewidget.h \
+    newprintwindow.h \
+    printsettingdialog.h
 
 
 RESOURCES += \

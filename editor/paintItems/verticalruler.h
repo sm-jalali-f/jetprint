@@ -11,7 +11,7 @@ class VerticalRuler : public QGraphicsItem
 
 
 public:
-    VerticalRuler(QWidget *parent,int height,int interval);
+    VerticalRuler(QWidget *parent,int height,int interval,int rulerWidth);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QPoint getPosition();
     void setHeightRuler(int height);

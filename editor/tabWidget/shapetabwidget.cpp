@@ -85,47 +85,56 @@ ShapeTabWidget::ShapeTabWidget(QWidget *parent):QWidget(parent)
     hLayout->addWidget(parallelogramBtn);
     hLayout->addWidget(lineBtn);
     hLayout->addStretch(1);
+    connect(circleBtn,SIGNAL(released()),this,SLOT(circleClicked()));
+    connect(rectangleBtn,SIGNAL(released()),this,SLOT(rectangleClicked()));
+    connect(ovalBtn,SIGNAL(released()),this,SLOT(ovalClicked()));
+    connect(squareBtn,SIGNAL(released()),this,SLOT(squareClicked()));
+    connect(lineBtn,SIGNAL(released()),this,SLOT(lineClicked()));
+    connect(diamondBtn,SIGNAL(released()),this,SLOT(diamondClicked()));
+    connect(parallelogramBtn,SIGNAL(released()),this,SLOT(parallelogramClicked()));
+    connect(triangleBtn,SIGNAL(released()),this,SLOT(triangleClicked()));
+
     setLayout(hLayout);
 
 }
 
 void ShapeTabWidget::circleClicked()
 {
-
+    emit circleBtnClicked();
 }
 
 void ShapeTabWidget::rectangleClicked()
 {
-
+    emit rectangleBtnClicked();
 }
 
 void ShapeTabWidget::squareClicked()
 {
-
+    emit squareBtnClicked();
 }
 
 void ShapeTabWidget::lineClicked()
 {
-
+    emit lineBtnClicked();
 }
 
 void ShapeTabWidget::triangleClicked()
 {
-
+    emit triangleBtnClicked();
 }
 
 void ShapeTabWidget::ovalClicked()
 {
-
+    emit ovalBtnClicked();
 }
 
 void ShapeTabWidget::diamondClicked()
 {
-
+    emit diamondBtnClicked();
 }
 
 void ShapeTabWidget::parallelogramClicked()
 {
-
+    emit parallelogramBtnClicked();
 }
 

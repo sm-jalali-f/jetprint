@@ -12,20 +12,21 @@ PaintFrame::PaintFrame(QWidget *parent) : QGraphicsView(parent)
     this->setFixedSize(fixedWidth,fixedHeight);
     scene = new QGraphicsScene(0,0,fixedWidth,fixedHeight );
     this->setScene(scene);
-    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->ensureVisible(0,0,fixedWidth,fixedHeight,0,0);
     this->setBackgroundBrush(QColor(255, 255, 255));
     scene->setBackgroundBrush(QColor(100,102,123));
     drawDividerLine(minimumEndLineX);
-    vRuler = new VerticalRuler(this,fixedHeight,10);
-    hRuler = new HorizontalRuler(this,vRuler->getWidth(),fixedWidth-vRuler->getWidth(),fixedHeight,10);
+    vRuler = new VerticalRuler(this,fixedHeight,10,RULER_WIDTH);
+    hRuler = new HorizontalRuler(this,vRuler->getWidth(),fixedWidth-vRuler->getWidth(),fixedHeight,10,RULER_WIDTH);
     vRuler->setHeightRuler(fixedHeight-hRuler->getHeight());
     scene->addItem(vRuler);
     vRuler->show();
     scene->addItem(hRuler);
     hRuler->show();
     this->show();
+//    printRect.setRect();
 }
 
 void PaintFrame::addBarcode(QPointF position,int width,int height)
@@ -223,7 +224,7 @@ QPixmap PaintFrame::toPixmap()
 
 QPixmap PaintFrame::getPrintPixmap()
 {
-    return QPixmap::grabWidget(this,1,1,endLinePosX-1,fixedHeight-1);
+    return QPixmap::grabWidget(this,RULER_WIDTH+3,1,endLinePosX-RULER_WIDTH-3,fixedHeight-RULER_WIDTH-1);
 
 }
 

@@ -3,10 +3,13 @@
 #include <editorwidget.h>
 #include <neweditorwidget.h>
 #include <printwindow.h>
+#include "printsettingdialog.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+//    PrintSettingDialog *dialog =new PrintSettingDialog();
+//    dialog->exec();
 
 //    EditorWidget w;
     NewEditorWidget w;

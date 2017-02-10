@@ -115,8 +115,10 @@ EditorWidget::EditorWidget(QWidget *parent) :
 
 void EditorWidget::showPrintWindow()
 {
-    JetPrintWindow *printWin = new JetPrintWindow(this->paintFrame->getPrintPixmap(),this->paintFrame);
+    JetPrintWindow *printWin = new JetPrintWindow(this->paintFrame->toPixmap(),this->paintFrame);
     printWin->show();
+    qDebug()<<"pppppppppppppppppppppppp";
+    this->close();
 }
 void EditorWidget::onShapeBtnClicked(){
 
