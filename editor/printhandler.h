@@ -9,6 +9,7 @@
 #include <QtDebug>
 #include <QString>
 #include <QList>
+#include <paintframe.h>
 
 
 class PrintHandler : public QThread
@@ -26,6 +27,7 @@ public:
     void setPrintMode(int mode);
     void setPrintInterval(long miliSecond);
     void setSectorInterval(long microSecond);
+    void setPaintFrame(PaintFrame *mPaintFrame);
     void setData(QByteArray data);
 
 public slots:
@@ -55,7 +57,8 @@ private:
     void setAutoPrintCommand(); // set sector interval is automatic
     void setManualPrintCommand(); // set sector interval is manual
     void setSectorIntervalCommand(long microSecond); //set sector interval time with 2 step
-    //serialPortHandler *portHandler;
+
+    PaintFrame *mPaintFrame;
     QByteArray data;
     long sectorInterval;
     long printInterval;

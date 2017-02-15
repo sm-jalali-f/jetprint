@@ -46,6 +46,14 @@ public slots:
     void addOval();
     void addDiamond();
     void addParallelogoram();
+    void addText();
+    void addImage();
+    void addCounter();
+    void addDate();
+    void addTime();
+
+    void paintFrameChanged(double width,double height);
+
     void printClicked();
     void settingClicked();
     void saveClicked();
@@ -53,7 +61,7 @@ public slots:
     void newProjectClicked();
     void undoClicked();
     void redoClicked();
-    void paintFrameChanged(double width,double height);
+
 };
 
 #endif // NEWEDITORWIDGET_H

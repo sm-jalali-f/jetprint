@@ -67,7 +67,7 @@ public:
     void unSelect();
 protected:
     QPoint rotateClickedPos;
-    const int IC_ROTATE_SIZE = 24;
+    static const int IC_ROTATE_SIZE = 24;
     QRectF rotateRect;
     bool isDrawBorder();
     void mousePressUpdateState(QPoint point);

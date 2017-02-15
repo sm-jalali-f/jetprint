@@ -19,6 +19,14 @@ class PrintSettingDialog : public QDialog
 
 public:
     PrintSettingDialog();
+    const QString COMPANY_NAME = "Doti";
+    const QString APPLICATION_NAME = "Jetprinter";
+    const QString SPEED_TYPE_AUTO_KEY ="speedType";
+    const QString INTERVAL_TYPE_AUTO_KEY ="intervalType";
+    const QString INTERVAL_TIME_KEY ="intervalTime";
+    const QString SPEED_VALUE_KEY ="speedValue";
+    const int DEFAULT_INTERVAL_VALUE =1000;
+    const int DEFAULT_SPEED_VALUE =100;
 private:
     QGroupBox *printSpeedBox,*intervalBox;
     QRadioButton *autoPrintSpeedRadio,*manualPrintSpeedRadio;
@@ -31,10 +39,7 @@ private:
     QPushButton *cancelBtn,*applyBtn,*okBtn;
     void loadSetting();
     void saveSetting();
-    QString SPEED_TYPE_KEY ="speedType";
-    QString INTERVAL_TYPE_KEY ="intervalType";
-    QString INTERVAL_TIME_KEY ="intervalTime";
-    QString SPEED_VALUE_KEY ="speedValue";
+
 
 public slots:
     void autoIntervalSelected();
@@ -42,6 +47,9 @@ public slots:
     void autoSpeedSelected();
     void manualSpeedSelected();
 
+    void applyClicked();
+    void okClicked();
+    void cancelClicked();
 
 
 };

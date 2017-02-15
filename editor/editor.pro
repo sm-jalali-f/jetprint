@@ -56,7 +56,8 @@ SOURCES += main.cpp\
     settingDialog/networktabwidget.cpp \
     settingDialog/timedatewidget.cpp \
     newprintwindow.cpp \
-    printsettingdialog.cpp
+    printsettingdialog.cpp \
+    paintItems/counteritem.cpp
 
 
 HEADERS  += \
@@ -97,7 +98,8 @@ HEADERS  += \
     settingDialog/networktabwidget.h \
     settingDialog/timedatewidget.h \
     newprintwindow.h \
-    printsettingdialog.h
+    printsettingdialog.h \
+    paintItems/counteritem.h
 
 
 RESOURCES += \

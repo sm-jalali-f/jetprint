@@ -1,13 +1,13 @@
 #include "dateitem.h"
 
 
-DateItem::DateItem(QWidget *parent, QPointF position, int width, int height):DrawItem()
+DateItem::DateItem(QWidget *parent, QPointF position, int width, int height,DrawItemType itemType):DrawItem()
 {
     this->parent = parent;
     this->position = position;
     this->width = width;
     this->height = height;
-    this->itemType =  DATE_ITEM;
+    this->itemType =  itemType;
 }
 
 QPoint DateItem::getPosition()
@@ -249,15 +249,23 @@ void DateItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     scene()->setBackgroundBrush(shapeBgBrush);
     painter->setOpacity(Qt::transparent);
     QDateTime currentTime;
+    QString dateTime;
+    if(itemType == TIME_ITEM){
+        dateTime = currentTime.currentDateTime().toString("HH:mm:ss");
 
-    QString date = currentTime.currentDateTime().toString("yyyy-MM-dd hh:mm:ss A");
+    }else if(itemType == DATE_ITEM){
+        dateTime = currentTime.currentDateTime().toString("yyyy-MM-dd");
+
+    }else if(itemType == DATE_TIME_ITEM){
+        dateTime = currentTime.currentDateTime().toString("yyyy-MM-dd HH:mm:ss ");
+    }
     if(!isDragingItem())
         painter->setPen(shapePen);
     else
         painter->setPen(dragPen);
     painter->setFont(QFont("TAHOMA",25));
 
-    painter->drawText(position.x(),position.y(),width,height,Qt::AlignCenter,date);
+    painter->drawText(position.x(),position.y(),width,height,Qt::AlignCenter,dateTime);
 //    painter->drawText(position.x(),position.y(),date);
     updateCornerPoint();
     if(isDrawBorder()){

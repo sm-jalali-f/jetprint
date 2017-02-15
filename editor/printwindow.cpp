@@ -135,7 +135,7 @@ void JetPrintWindow::startPauseClicked(){
         mPrintHandler->setSectorInterval(sectorIntervalEt->text().toLong());
         if(resultFrame->isDynamic()){
             mPrintHandler->setPrintMode(DYNAMIC);
-            mPrintHandler->setPaintFrame(resultFrame,WIDTH_SCALED,HEIGHT_SCALED);
+//            mPrintHandler->setPaintFrame(resultFrame,WIDTH_SCALED,HEIGHT_SCALED);
         }else{
             mPrintHandler->setPrintMode(STATIC);
         }

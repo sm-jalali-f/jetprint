@@ -86,7 +86,8 @@ SOURCES       = ../editor/main.cpp \
 		../editor/settingDialog/networktabwidget.cpp \
 		../editor/settingDialog/timedatewidget.cpp \
 		../editor/newprintwindow.cpp \
-		../editor/printsettingdialog.cpp qrc_resFile.cpp \
+		../editor/printsettingdialog.cpp \
+		../editor/paintItems/counteritem.cpp qrc_resFile.cpp \
 		moc_editorwidget.cpp \
 		moc_paintframe.cpp \
 		moc_printwindow.cpp \
@@ -138,6 +139,7 @@ OBJECTS       = main.o \
 		timedatewidget.o \
 		newprintwindow.o \
 		printsettingdialog.o \
+		counteritem.o \
 		qrc_resFile.o \
 		moc_editorwidget.o \
 		moc_paintframe.o \
@@ -255,7 +257,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../editor/settingDialog/networktabwidget.h \
 		../editor/settingDialog/timedatewidget.h \
 		../editor/newprintwindow.h \
-		../editor/printsettingdialog.h ../editor/main.cpp \
+		../editor/printsettingdialog.h \
+		../editor/paintItems/counteritem.h ../editor/main.cpp \
 		../editor/editorwidget.cpp \
 		../editor/paintframe.cpp \
 		../editor/printwindow.cpp \
@@ -293,7 +296,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../editor/settingDialog/networktabwidget.cpp \
 		../editor/settingDialog/timedatewidget.cpp \
 		../editor/newprintwindow.cpp \
-		../editor/printsettingdialog.cpp
+		../editor/printsettingdialog.cpp \
+		../editor/paintItems/counteritem.cpp
 QMAKE_TARGET  = editor
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = editor
@@ -492,8 +496,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../editor/resFile.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents ../editor/editorwidget.h ../editor/paintframe.h ../editor/printwindow.h ../editor/serialport/printhandler.h ../editor/paintItems/shapes/circleitem.h ../editor/paintItems/shapes/rectangleitem.h ../editor/paintItems/drawitem.h ../editor/paintItems/shapes/triangleitem.h ../editor/paintItems/shapes/ovalitem.h ../editor/paintItems/shapes/diamonditem.h ../editor/paintItems/shapes/lineitem.h ../editor/paintItems/shapes/parallelogramitem.h ../editor/paintItems/dateitem.h ../editor/paintItems/myimageitem.h ../editor/readport.h ../editor/actionHandler/paintaction.h ../editor/actionHandler/actionmanager.h ../editor/paintItems/textitem.h ../editor/types/drawitemtype.h ../editor/types/mousemoveresult.h ../editor/types/drawitemstate.h ../editor/paintItems/barcodeitem.h ../editor/barcodeselectdialog.h ../editor/types/printtype.h ../editor/paintItems/endpaintline.h ../editor/paintItems/verticalruler.h ../editor/paintItems/horizontalruler.h ../editor/neweditorwidget.h ../editor/tabWidget/shapetabwidget.h ../editor/tabWidget/inserttabwidget.h ../editor/tabWidget/barcodetabwidget.h ../editor/tabWidget/formattabwidget.h ../editor/settingDialog/settingdialog.h ../editor/settingDialog/generaltabwidget.h ../editor/settingDialog/networktabwidget.h ../editor/settingDialog/timedatewidget.h ../editor/newprintwindow.h ../editor/printsettingdialog.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../editor/main.cpp ../editor/editorwidget.cpp ../editor/paintframe.cpp ../editor/printwindow.cpp ../editor/serialport/printhandler.cpp ../editor/paintItems/shapes/circleitem.cpp ../editor/paintItems/shapes/rectangleitem.cpp ../editor/paintItems/drawitem.cpp ../editor/paintItems/shapes/triangleitem.cpp ../editor/paintItems/shapes/ovalitem.cpp ../editor/paintItems/shapes/diamonditem.cpp ../editor/paintItems/shapes/lineitem.cpp ../editor/paintItems/shapes/parallelogramitem.cpp ../editor/paintItems/dateitem.cpp ../editor/paintItems/myimageitem.cpp ../editor/readport.cpp ../editor/actionHandler/paintaction.cpp ../editor/actionHandler/actionmanager.cpp ../editor/paintItems/textitem.cpp ../editor/types/drawitemtype.cpp ../editor/types/mousemoveresult.cpp ../editor/types/drawitemstate.cpp ../editor/paintItems/barcodeitem.cpp ../editor/barcodeselectdialog.cpp ../editor/types/printtype.cpp ../editor/paintItems/endpaintline.cpp ../editor/paintItems/verticalruler.cpp ../editor/paintItems/horizontalruler.cpp ../editor/neweditorwidget.cpp ../editor/tabWidget/shapetabwidget.cpp ../editor/tabWidget/inserttabwidget.cpp ../editor/tabWidget/barcodetabwidget.cpp ../editor/tabWidget/formattabwidget.cpp ../editor/settingDialog/settingdialog.cpp ../editor/settingDialog/generaltabwidget.cpp ../editor/settingDialog/networktabwidget.cpp ../editor/settingDialog/timedatewidget.cpp ../editor/newprintwindow.cpp ../editor/printsettingdialog.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../editor/editorwidget.h ../editor/paintframe.h ../editor/printwindow.h ../editor/serialport/printhandler.h ../editor/paintItems/shapes/circleitem.h ../editor/paintItems/shapes/rectangleitem.h ../editor/paintItems/drawitem.h ../editor/paintItems/shapes/triangleitem.h ../editor/paintItems/shapes/ovalitem.h ../editor/paintItems/shapes/diamonditem.h ../editor/paintItems/shapes/lineitem.h ../editor/paintItems/shapes/parallelogramitem.h ../editor/paintItems/dateitem.h ../editor/paintItems/myimageitem.h ../editor/readport.h ../editor/actionHandler/paintaction.h ../editor/actionHandler/actionmanager.h ../editor/paintItems/textitem.h ../editor/types/drawitemtype.h ../editor/types/mousemoveresult.h ../editor/types/drawitemstate.h ../editor/paintItems/barcodeitem.h ../editor/barcodeselectdialog.h ../editor/types/printtype.h ../editor/paintItems/endpaintline.h ../editor/paintItems/verticalruler.h ../editor/paintItems/horizontalruler.h ../editor/neweditorwidget.h ../editor/tabWidget/shapetabwidget.h ../editor/tabWidget/inserttabwidget.h ../editor/tabWidget/barcodetabwidget.h ../editor/tabWidget/formattabwidget.h ../editor/settingDialog/settingdialog.h ../editor/settingDialog/generaltabwidget.h ../editor/settingDialog/networktabwidget.h ../editor/settingDialog/timedatewidget.h ../editor/newprintwindow.h ../editor/printsettingdialog.h ../editor/paintItems/counteritem.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../editor/main.cpp ../editor/editorwidget.cpp ../editor/paintframe.cpp ../editor/printwindow.cpp ../editor/serialport/printhandler.cpp ../editor/paintItems/shapes/circleitem.cpp ../editor/paintItems/shapes/rectangleitem.cpp ../editor/paintItems/drawitem.cpp ../editor/paintItems/shapes/triangleitem.cpp ../editor/paintItems/shapes/ovalitem.cpp ../editor/paintItems/shapes/diamonditem.cpp ../editor/paintItems/shapes/lineitem.cpp ../editor/paintItems/shapes/parallelogramitem.cpp ../editor/paintItems/dateitem.cpp ../editor/paintItems/myimageitem.cpp ../editor/readport.cpp ../editor/actionHandler/paintaction.cpp ../editor/actionHandler/actionmanager.cpp ../editor/paintItems/textitem.cpp ../editor/types/drawitemtype.cpp ../editor/types/mousemoveresult.cpp ../editor/types/drawitemstate.cpp ../editor/paintItems/barcodeitem.cpp ../editor/barcodeselectdialog.cpp ../editor/types/printtype.cpp ../editor/paintItems/endpaintline.cpp ../editor/paintItems/verticalruler.cpp ../editor/paintItems/horizontalruler.cpp ../editor/neweditorwidget.cpp ../editor/tabWidget/shapetabwidget.cpp ../editor/tabWidget/inserttabwidget.cpp ../editor/tabWidget/barcodetabwidget.cpp ../editor/tabWidget/formattabwidget.cpp ../editor/settingDialog/settingdialog.cpp ../editor/settingDialog/generaltabwidget.cpp ../editor/settingDialog/networktabwidget.cpp ../editor/settingDialog/timedatewidget.cpp ../editor/newprintwindow.cpp ../editor/printsettingdialog.cpp ../editor/paintItems/counteritem.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -717,6 +721,9 @@ moc_newprintwindow.cpp: ../editor/printsettingdialog.h \
 		../editor/paintItems/endpaintline.h \
 		../editor/paintItems/verticalruler.h \
 		../editor/paintItems/horizontalruler.h \
+		../editor/serialport/printhandler.h \
+		../editor/readport.h \
+		../editor/types/printtype.h \
 		../editor/newprintwindow.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/mohamad/projects/qt/jetprinter/editor -I/home/mohamad/Downloads/packages/zint/build/backend_qt4 -I/home/mohamad/Downloads/packages/zint/build/backend -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtQuick -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtQml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../editor/newprintwindow.h -o moc_newprintwindow.cpp
 
@@ -1074,11 +1081,21 @@ newprintwindow.o: ../editor/newprintwindow.cpp ../editor/newprintwindow.h \
 		../editor/paintItems/textitem.h \
 		../editor/paintItems/endpaintline.h \
 		../editor/paintItems/verticalruler.h \
-		../editor/paintItems/horizontalruler.h
+		../editor/paintItems/horizontalruler.h \
+		../editor/serialport/printhandler.h \
+		../editor/readport.h \
+		../editor/types/printtype.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o newprintwindow.o ../editor/newprintwindow.cpp
 
 printsettingdialog.o: ../editor/printsettingdialog.cpp ../editor/printsettingdialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o printsettingdialog.o ../editor/printsettingdialog.cpp
+
+counteritem.o: ../editor/paintItems/counteritem.cpp ../editor/paintItems/counteritem.h \
+		../editor/paintItems/drawitem.h \
+		../editor/types/drawitemtype.h \
+		../editor/types/mousemoveresult.h \
+		../editor/types/drawitemstate.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o counteritem.o ../editor/paintItems/counteritem.cpp
 
 qrc_resFile.o: qrc_resFile.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resFile.o qrc_resFile.cpp

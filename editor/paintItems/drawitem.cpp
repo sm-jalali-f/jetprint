@@ -1,9 +1,9 @@
 #include "drawitem.h"
 DrawItem::DrawItem(){
     shapePen.setColor(QColor(Qt::black));
-    shapePen.setWidth(3);
+    shapePen.setWidth(40);
     dragPen.setColor(QColor(Qt::gray));
-    dragPen.setWidth(3);
+    dragPen.setWidth(10);
     shapeBgBrush.setColor(QColor(255,255,255,255));
     itemState =  NOTHING_STATE;
 //    isPressed = false;
@@ -224,7 +224,8 @@ DrawItemState DrawItem::getItemState()
 
 void DrawItem::unSelect()
 {
-    itemState=NOTHING_STATE;
+    if(itemState!=REMOVED)
+        itemState=NOTHING_STATE;
 }
 
 bool DrawItem::isDrawBorder()

@@ -1,11 +1,18 @@
 #include "newprintwindow.h"
-
+#include "types/printtype.h"
 NewPrintWindow::NewPrintWindow(PaintFrame *frame,QWidget *parent ):
     QWidget(parent)
 {
+    qDebug()<<"saaaadflwegrwgjrkgmrklmgreklngrklngrelkngreklngreklgn";
     mPrintHandler =new PrintHandler();
     this->mPaintFrame = frame;
     QPixmap previewPixmap = mPaintFrame->getPrintPixmap();
+
+    int scaledWidth,scaledheight;
+    scaledheight = 128;
+    double factor = previewPixmap.height()/128;
+    scaledWidth = previewPixmap.width()/factor;
+    previewPixmap = previewPixmap.scaled(scaledWidth,scaledheight);
 
     this->setWindowState(Qt::WindowFullScreen);
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -22,7 +29,7 @@ NewPrintWindow::NewPrintWindow(PaintFrame *frame,QWidget *parent ):
     QVBoxLayout *leftLayout = new QVBoxLayout(leftWidget);
     leftLayout->setAlignment(Qt::AlignCenter);
 
-    printCounterLabel = new QLabel("1957");
+    printCounterLabel = new QLabel("0000");
 
     QFont f( "Arial", 100, QFont::Bold);
     printCounterLabel->setFont( f);
@@ -58,38 +65,63 @@ NewPrintWindow::NewPrintWindow(PaintFrame *frame,QWidget *parent ):
     connect(printSettingBtn,SIGNAL(clicked(bool)),this,SLOT(settingClicked()));
 
     setLayout(mainLayout);
+    mPrintSetting =new QSettings(COMPANY_NAME, APPLICATION_NAME);
+    settingDialog =new PrintSettingDialog();
+    connect(settingDialog,SIGNAL(finished(int)),this,SLOT(settingDialogClosed()));
+    QObject::connect(mPrintHandler, SIGNAL(valueChanged(int)),
+                         this, SLOT(printCountChanged(int)));
+
+}
+
+void NewPrintWindow::loadSetting()
+{
+    autoSpeed = mPrintSetting->value(SPEED_TYPE_AUTO_KEY,true).toBool();
+    speedValue = mPrintSetting->value(SPEED_VALUE_KEY,DEFAULT_SPEED_VALUE).toInt();
+    autoInterval = mPrintSetting->value(INTERVAL_TYPE_AUTO_KEY,false).toBool();
+    intervalValue = mPrintSetting->value(INTERVAL_TIME_KEY,DEFAULT_INTERVAL_VALUE).toInt();
 }
 
 void NewPrintWindow::startStopClicked()
 {
     if(isPrinting){
+        mPrintHandler->pausePrint();
         isPrinting = false;
         startStopBtn->setText("  Start  ");
     }else{
         isPrinting =true;
         startStopBtn->setText("  Stop  ");
-//        mPrintHandler->setData(byteArray);
-//        mPrintHandler->setPrintInterval(printCommandIntervalEt->text().toLong());
-//        mPrintHandler->setSectorInterval(sectorIntervalEt->text().toLong());
-//        if(resultFrame->isDynamic()){
-//            mPrintHandler->setPrintMode(DYNAMIC);
-//            mPrintHandler->setPaintFrame(resultFrame,WIDTH_SCALED,HEIGHT_SCALED);
-//        }else{
-//            mPrintHandler->setPrintMode(STATIC);
-//        }
-//        mPrintHandler->run();
+        mPrintHandler->setPaintFrame(mPaintFrame);
+        mPrintHandler->setPrintInterval(intervalValue);
+        mPrintHandler->setSectorInterval(speedValue);
+        if(mPaintFrame->isDynamic()){
+            mPrintHandler->setPrintMode(DYNAMIC);
+        }else{
+            mPrintHandler->setPrintMode(STATIC);
+        }
+        mPrintHandler->run();
     }
 }
 
 void NewPrintWindow::settingClicked()
 {
-    PrintSettingDialog *dialog =new PrintSettingDialog();
-    dialog->exec();
+
+    settingDialog->exec();
 }
 
 void NewPrintWindow::backToEditorClicked()
 {
     this->close();
+}
+
+void NewPrintWindow::settingDialogClosed()
+{
+    qDebug()<<"NewPrintWindow :settingDialogClosed();";
+    loadSetting();
+}
+
+void NewPrintWindow::printCountChanged(int count)
+{
+    printCounterLabel->setText(QString::number(count));
 }
 
 

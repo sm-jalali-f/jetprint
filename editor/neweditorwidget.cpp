@@ -13,7 +13,7 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
     openProjectBtn = new QPushButton();
     undoBtn = new QPushButton();
     redoBtn = new QPushButton();
-
+    qDebug()<<"NewEditorWidget: NewEditorWidget: middle -1";
     QPixmap pixmapSetting(":/res/icons/ic_setting");
     QPixmap pixmapSave(":/res/icons/ic_save");
     QPixmap pixmapNewProject(":/res/icons/ic_new_project");
@@ -73,7 +73,7 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
     tabWidget->addTab(mInsertTabWidget,tr("  Insert  "));
     tabWidget->addTab(mBarcodeTabWidget, tr(" Barcode "));
     tabWidget->addTab(mFormatTabWidget, tr("   Format   "));
-
+    qDebug()<<"NewEditorWidget: NewEditorWidget: middle 0";
     mainLayout->addWidget(tabWidget);
     mPaintframe = new PaintFrame;
     mainLayout->addWidget(mPaintframe);
@@ -89,6 +89,7 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
     QWidget *printWidget = new QWidget();
     QVBoxLayout *printVLayout = new QVBoxLayout(printWidget);
 
+    qDebug()<<"NewEditorWidget: NewEditorWidget: middle 1";
     printBtn= new QPushButton();
     QPixmap pixmapPrint(":/res/icons/ic_print");
     QIcon printIcon(pixmapPrint);
@@ -133,6 +134,7 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
 
     bottomLayout->addWidget(bottomLeftWidget,1);
     bottomLayout->addWidget(bottomRightWidget,4);
+    qDebug()<<"NewEditorWidget: NewEditorWidget: middle 2";
 
     mainLayout->addWidget(bottomWidget);
 //    mainLayout->addStretch();
@@ -159,6 +161,11 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
     QObject::connect(mShapeTabWidget, SIGNAL(parallelogramBtnClicked()),
                      this, SLOT(addParallelogoram()));
 
+    QObject::connect(mInsertTabWidget, SIGNAL(onTextBtnClicked()),this, SLOT(addText()));
+    QObject::connect(mInsertTabWidget, SIGNAL(onImageBtnClicked()),this, SLOT(addImage()));
+    QObject::connect(mInsertTabWidget, SIGNAL(onCounterBtnClicked()),this, SLOT(addCounter()));
+    QObject::connect(mInsertTabWidget, SIGNAL(onDateBtnClicked()),this, SLOT(addDate()));
+    QObject::connect(mInsertTabWidget, SIGNAL(onTimeBtnClicked()),this, SLOT(addTime()));
     connect(settingBtn,SIGNAL(clicked(bool)),this,SLOT(settingClicked()));
     connect(saveBtn,SIGNAL(clicked(bool)),this,SLOT(saveClicked()));
     connect(openProjectBtn,SIGNAL(clicked(bool)),this,SLOT(openProjectClicked()));
@@ -209,6 +216,40 @@ void NewEditorWidget::addDiamond()
 void NewEditorWidget::addParallelogoram()
 {
     mPaintframe->addParallelogram(QPointF(50,10),90,30,75);
+}
+
+void NewEditorWidget::addText()
+{
+    mPaintframe->addTextItem(QPoint(20,20));
+}
+
+void NewEditorWidget::addImage()
+{
+    qDebug()<<"NewEditorWidget: addImage 1";
+    QFileDialog dialog(this);
+    dialog.setNameFilter(tr("Images (*.png *.jpg)"));
+    dialog.setViewMode(QFileDialog::Detail);
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+                                                    "C:/",
+                                                    tr("Images (*.png *.jpg)"));
+    mPaintframe->addImage(QPointF(30,30),fileName);
+}
+
+void NewEditorWidget::addCounter()
+{
+    mPaintframe->addCounterItem(QPoint(20,20));
+
+}
+
+void NewEditorWidget::addDate()
+{
+     mPaintframe->addDate(QPointF(0,0),440,120);
+
+}
+
+void NewEditorWidget::addTime()
+{
+    mPaintframe->addTime(QPointF(0,0),320,120);
 }
 
 void NewEditorWidget::printClicked()

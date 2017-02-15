@@ -9,7 +9,7 @@
 class DateItem: public DrawItem
 {
 public:
-    DateItem(QWidget *parent,QPointF position,int width,int height);
+    DateItem(QWidget *parent,QPointF position,int width,int height,DrawItemType itemType);
     QPoint getPosition();
     int getWidth() const;
     int getHeight() const ;

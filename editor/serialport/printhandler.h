@@ -33,7 +33,7 @@ public:
     void setPrintInterval(long miliSecond);
     void setSectorInterval(long microSecond);
     void setData(QByteArray data);
-    void setPaintFrame(PaintFrame *frame,int width,int height);
+    void setPaintFrame(PaintFrame *frame);
 
     void pausePrint();
 
@@ -41,6 +41,12 @@ public slots:
     void intervalPrintTimeout();
 
 private:
+
+//    const long FRAME_INTERVAL_TIME = 10; // 2 milisecond
+    const int MAX_FRAME_SIZE = 256; // 256 BYTE
+    const int BYTE_COUNT_OF_SECTOR= 16; // each sector is 16 byte
+    const int PRINT_HEAD_HEIGHT_PIN= 128;
+    const int WRITE_INTERVAL = 4;
 
     bool isPrint =false;
 
@@ -68,11 +74,11 @@ private:
     void setSectorIntervalCommand(long microSecond); //set sector interval time with 2 step
     void normalPrintCommand(); //command:s000
 
-    //serialPortHandler *portHandler;
+    QByteArray generateByteFromPixmap(QPixmap pixmap);
     PaintFrame *mPaintFrame;
     int paintFrameWidthScale,paintFrameHeightScale;
     QByteArray dynamicData;
-    QByteArray getPixmapData();
+//    QByteArray getPixmapData();
     char QStringToByte(QString s);
     bool shouldRefresh =false;
 
@@ -81,9 +87,6 @@ private:
     long printInterval;
     PrintType printMode;
     int sectorCount;
-//    const long FRAME_INTERVAL_TIME = 10; // 2 milisecond
-    const int MAX_FRAME_SIZE = 256; // 256 BYTE
-    const int BYTE_COUNT_OF_SECTOR= 16; // each sector is 16 byte
 //============================= port handler ========================
     void writeInPort(QByteArray data);
     QStringList getPortNames();
@@ -104,7 +107,6 @@ private:
     QList<QSerialPortInfo> availableSerialPortList;
 
     QTimer *writeTimer; // this timer control the interval between send data to serial port (WRITE_INTERVAL mili second)
-    const int WRITE_INTERVAL = 4;
     bool writePermission;
     QQueue<QByteArray> writeQueue;
 

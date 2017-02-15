@@ -13,6 +13,19 @@ class InsertTabWidget:public QWidget
 public:
     InsertTabWidget(QWidget *parent=0);
     QPushButton *addTextBtn,*addImageBtn,*addCounterBtn,*addDateBtn,*addTimeBtn;
+public slots:
+    void TextBtnClicked();
+    void ImageBtnClicked();
+    void CounterBtnClicked();
+    void DateBtnClicked();
+    void TimeBtnClicked();
+
+signals:
+    void onTextBtnClicked();
+    void onImageBtnClicked();
+    void onCounterBtnClicked();
+    void onDateBtnClicked();
+    void onTimeBtnClicked();
 };
 
 #endif // INSERTTABWIDGET_H

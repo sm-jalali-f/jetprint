@@ -54,6 +54,37 @@ InsertTabWidget::InsertTabWidget(QWidget *parent):QWidget(parent)
     mainLayout->addStretch();
 
     setLayout(mainLayout);
+    connect(addTextBtn,SIGNAL(clicked(bool)),this,SLOT(TextBtnClicked()));
+    connect(addImageBtn,SIGNAL(clicked(bool)),this,SLOT(ImageBtnClicked()));
+    connect(addCounterBtn,SIGNAL(clicked(bool)),this,SLOT(CounterBtnClicked()));
+    connect(addDateBtn,SIGNAL(clicked(bool)),this,SLOT(DateBtnClicked()));
+    connect(addTimeBtn,SIGNAL(clicked(bool)),this,SLOT(TimeBtnClicked()));
 
+}
+
+void InsertTabWidget::TextBtnClicked()
+{
+    emit onTextBtnClicked();
+}
+
+void InsertTabWidget::ImageBtnClicked()
+{
+    emit onImageBtnClicked();
+
+}
+
+void InsertTabWidget::CounterBtnClicked()
+{
+    emit onCounterBtnClicked();
+}
+
+void InsertTabWidget::DateBtnClicked()
+{
+    emit onDateBtnClicked();
+}
+
+void InsertTabWidget::TimeBtnClicked()
+{
+    emit onTimeBtnClicked();
 }
 

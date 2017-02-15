@@ -24,6 +24,7 @@
 #include <paintItems/endpaintline.h>
 #include <paintItems/verticalruler.h>
 #include <paintItems/horizontalruler.h>
+#include <paintItems/counteritem.h>
 //#include
 
 class PaintFrame : public QGraphicsView
@@ -44,8 +45,11 @@ public:
     void addTriangle(QPointF position1,QPointF position2,QPointF position3);
     void addParallelogram(QPointF position,int width,int height,float leftBottomAngle);
     void addDateTime(QPointF position,int width,int height);
+    void addDate(QPointF position,int width,int height);
+    void addTime(QPointF position,int width,int height);
     void addImage(QPointF position,QString filePath);
     void addTextItem(QPointF point);
+    void addCounterItem(QPointF point);
     void keyPressEvent(QKeyEvent *event);
 
 
@@ -72,9 +76,9 @@ private:
     int fixedHeight = 9*64;
     int minimumEndLineX =100;
     int maximumEndLineX =fixedWidth-3;
-    int endLineMargine =10;
+    int endLineMargine =50;
     EndPaintLine *endLineDivider;
-    int endLinePosX =-1;
+    int endLinePosX =minimumEndLineX;
 
     bool hasDynamicItem;
     bool isPressedObject;

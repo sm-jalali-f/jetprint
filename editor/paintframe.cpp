@@ -12,7 +12,7 @@ PaintFrame::PaintFrame(QWidget *parent) : QGraphicsView(parent)
     this->setFixedSize(fixedWidth,fixedHeight);
     scene = new QGraphicsScene(0,0,fixedWidth,fixedHeight );
     this->setScene(scene);
-//    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->ensureVisible(0,0,fixedWidth,fixedHeight,0,0);
     this->setBackgroundBrush(QColor(255, 255, 255));
@@ -127,7 +127,29 @@ void PaintFrame::addParallelogram(QPointF position, int width, int height, float
 void PaintFrame::addDateTime(QPointF position, int width, int height)
 {
     this->hasDynamicItem = true;
-    DateItem *dateItem = new DateItem(this,position,width,height);
+    DateItem *dateItem = new DateItem(this,position,width,height,DATE_TIME_ITEM);
+    dateItem->setAcceptHoverEvents(true);
+    scene->addItem(dateItem);
+    dateItem->show();
+    itemList.append(dateItem);
+    drawDividerLine(findEndPaint());
+}
+
+void PaintFrame::addDate(QPointF position, int width, int height)
+{
+    this->hasDynamicItem = true;
+    DateItem *dateItem = new DateItem(this,position,width,height,DATE_ITEM);
+    dateItem->setAcceptHoverEvents(true);
+    scene->addItem(dateItem);
+    dateItem->show();
+    itemList.append(dateItem);
+    drawDividerLine(findEndPaint());
+}
+
+void PaintFrame::addTime(QPointF position, int width, int height)
+{
+    this->hasDynamicItem = true;
+    DateItem *dateItem = new DateItem(this,position,width,height,TIME_ITEM);
     dateItem->setAcceptHoverEvents(true);
     scene->addItem(dateItem);
     dateItem->show();
@@ -153,6 +175,16 @@ void PaintFrame::addTextItem(QPointF point)
     scene->addItem(text);
     text->show();
     itemList.append(text);
+    drawDividerLine(findEndPaint());
+}
+
+void PaintFrame::addCounterItem(QPointF point)
+{
+    CounterItem *counter= new CounterItem (this,point,240,40);
+    counter->setAcceptHoverEvents(true);
+    scene->addItem(counter);
+    counter->show();
+    itemList.append(counter);
     drawDividerLine(findEndPaint());
 }
 void PaintFrame::drawDividerLine(int x)
@@ -233,7 +265,8 @@ QPixmap PaintFrame::toPixmap()
 
 QPixmap PaintFrame::getPrintPixmap()
 {
-    return QPixmap::grabWidget(this,RULER_WIDTH+3,1,endLinePosX-RULER_WIDTH-3,fixedHeight-hRuler->getHeight()-1);
+    QRect frame(RULER_WIDTH+3,1,endLinePosX-RULER_WIDTH-3,fixedHeight-hRuler->getHeight()-1);
+    return this->grab(frame);
 
 }
 
