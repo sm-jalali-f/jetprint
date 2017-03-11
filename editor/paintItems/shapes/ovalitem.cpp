@@ -69,6 +69,11 @@ bool OvalItem::isInside(QPoint point)
     return false;
 }
 
+void OvalItem::changeFontSize(int fontSize)
+{
+
+}
+
 
 void OvalItem::itemDropEvent(QDropEvent *event)
 {

@@ -2,7 +2,8 @@
 
 NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
 {
-    qDebug()<<"NewEditorWidget: NewEditorWidget: start";
+    qDebug()<<"NewEditorWidget: start constructor";
+
     this->setWindowState(Qt::WindowFullScreen);
     QBoxLayout *mainLayout = new QVBoxLayout;
     QWidget *menuWidget = new QWidget;
@@ -13,7 +14,7 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
     openProjectBtn = new QPushButton();
     undoBtn = new QPushButton();
     redoBtn = new QPushButton();
-    qDebug()<<"NewEditorWidget: NewEditorWidget: middle -1";
+//    qDebug()<<"NewEditorWidget: NewEditorWidget: middle -1";
     QPixmap pixmapSetting(":/res/icons/ic_setting");
     QPixmap pixmapSave(":/res/icons/ic_save");
     QPixmap pixmapNewProject(":/res/icons/ic_new_project");
@@ -49,6 +50,8 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
     undoBtn->setFixedSize(pixmapSetting.rect().size().height()/8,pixmapSetting.rect().size().height()/8);
     redoBtn->setFixedSize(pixmapSetting.rect().size().height()/8,pixmapSetting.rect().size().height()/8);
 
+    qDebug()<<"NewEditorWidget: created buttons";
+
     menuLaout->addWidget(saveBtn);
     menuLaout->addWidget(settingBtn);
     menuLaout->addStretch(1);
@@ -60,11 +63,9 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
     menuLaout->addWidget(redoBtn);
     menuLaout->addStretch(40);
     mainLayout->addWidget(menuWidget);
+    qDebug()<<"NewEditorWidget: added buttons";
 
-//    this->setStyleSheet("background-color:#e0e0d1");
     tabWidget = new QTabWidget;
-//    tabWidget->tabBar()->setStyleSheet("color:red;background-color:#e0e0eb");
-//    tabWidget->tabBar()->setStyleSheet("background-color:#E8E8E8;QTabBar::tab:selected, QTabBar::tab:hover {background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #fafafa, stop: 0.4 #f4f4f4,stop: 0.5 #E8E8E8, stop: 1.0 #E8E8E8);}QTabBar::tab:selected {border-color: #9B9B9B;border-bottom-color: black; }QTabBar::tab:!selected {margin-top: 2px;}");
     mShapeTabWidget = new ShapeTabWidget;
     mInsertTabWidget = new InsertTabWidget;
     mBarcodeTabWidget = new BarcodeTabWidget;
@@ -73,9 +74,9 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
     tabWidget->addTab(mInsertTabWidget,tr("  Insert  "));
     tabWidget->addTab(mBarcodeTabWidget, tr(" Barcode "));
     tabWidget->addTab(mFormatTabWidget, tr("   Format   "));
-    qDebug()<<"NewEditorWidget: NewEditorWidget: middle 0";
+    qDebug()<<"NewEditorWidget: add tab";
     mainLayout->addWidget(tabWidget);
-    mPaintframe = new PaintFrame;
+    mPaintframe = new PaintFrame();
     mainLayout->addWidget(mPaintframe);
 
     QWidget *bottomWidget = new QWidget;
@@ -89,7 +90,7 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
     QWidget *printWidget = new QWidget();
     QVBoxLayout *printVLayout = new QVBoxLayout(printWidget);
 
-    qDebug()<<"NewEditorWidget: NewEditorWidget: middle 1";
+
     printBtn= new QPushButton();
     QPixmap pixmapPrint(":/res/icons/ic_print");
     QIcon printIcon(pixmapPrint);
@@ -101,6 +102,8 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
     printVLayout->setAlignment(Qt::AlignCenter);
     printVLayout->addStretch();
     bottomLeftLayout->addWidget(printWidget);
+
+    qDebug()<<"NewEditorWidget: print detail";
 
     QWidget *companyWidget = new QWidget();
     QVBoxLayout *companyVLayout = new QVBoxLayout(companyWidget);
@@ -134,16 +137,14 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
 
     bottomLayout->addWidget(bottomLeftWidget,1);
     bottomLayout->addWidget(bottomRightWidget,4);
-    qDebug()<<"NewEditorWidget: NewEditorWidget: middle 2";
 
     mainLayout->addWidget(bottomWidget);
-//    mainLayout->addStretch();
     tabWidget->setFixedHeight(TAB_HEIGHT);
     setLayout(mainLayout);
     printBtn->setStyleSheet("border-style:None;");
+    qDebug()<<"NewEditorWidget: before connect object";
     connect(printBtn,SIGNAL(clicked(bool)),this,SLOT(printClicked()));
     printWidget->setStyleSheet("border-style:None;");
-//    tabWidget->setCurrentIndex(3);
     QObject::connect(mShapeTabWidget, SIGNAL(circleBtnClicked()),
                          this, SLOT(addCircle()));
     QObject::connect(mShapeTabWidget, SIGNAL(rectangleBtnClicked()),
@@ -161,6 +162,18 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
     QObject::connect(mShapeTabWidget, SIGNAL(parallelogramBtnClicked()),
                      this, SLOT(addParallelogoram()));
 
+    QObject::connect(mBarcodeTabWidget, SIGNAL(qrClicked()),
+                     this, SLOT(addQrBarcode()));
+
+    QObject::connect(mBarcodeTabWidget, SIGNAL(ean13Clicked()),
+                     this, SLOT(addEan13Barcode()));
+
+    QObject::connect(mBarcodeTabWidget, SIGNAL(code128Clicked()),
+                     this, SLOT(addCode128Barcode()));
+
+    QObject::connect(mFormatTabWidget, SIGNAL(onFontSizeChanged(int)),
+                     this, SLOT(fontSizeChanged(int)));
+
     QObject::connect(mInsertTabWidget, SIGNAL(onTextBtnClicked()),this, SLOT(addText()));
     QObject::connect(mInsertTabWidget, SIGNAL(onImageBtnClicked()),this, SLOT(addImage()));
     QObject::connect(mInsertTabWidget, SIGNAL(onCounterBtnClicked()),this, SLOT(addCounter()));
@@ -175,7 +188,7 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
     connect(mPaintframe, SIGNAL(paintFrameChanged(double,double)),
                          this, SLOT(paintFrameChanged(double,double)));
 
-    qDebug()<<"NewEditorWidget: NewEditorWidget: finish";
+    qDebug()<<"NewEditorWidget: end constructor";
 }
 
 void NewEditorWidget::addCircle()
@@ -252,6 +265,31 @@ void NewEditorWidget::addTime()
     mPaintframe->addTime(QPointF(0,0),320,120);
 }
 
+void NewEditorWidget::addQrBarcode()
+{
+    qDebug()<<"NewEditorWidget:addQrBarcode: ";
+
+    unsigned char c[] ={0x61,0x61,0x62,0x61,0x62,0x61,0x62,0x61,0x62,0x61,0x62,0x61,0x62};
+    mPaintframe->addBarcode(QPointF(30,30),60,30,c,13,BARCODE_QRCODE);
+}
+
+void NewEditorWidget::addEan13Barcode()
+{
+    qDebug()<<"NewEditorWidget:addEan13Barcode: start";
+    unsigned char c[] ={0x61,0x61,0x62,0x61,0x62,0x61,0x62,0x61,0x62,0x61,0x62,0x61,0x62};
+    mPaintframe->addBarcode(QPointF(30,30),60,30,c,13,BARCODE_EAN14);
+
+}
+
+void NewEditorWidget::addCode128Barcode()
+{
+
+    qDebug()<<"NewEditorWidget:addCode128Barcode: start";
+    unsigned char c[] ={0x61,0x61,0x62,0x61,0x62,0x61,0x62,0x61,0x62,0x61,0x62,0x61,0x62};
+    mPaintframe->addBarcode(QPointF(30,30),60,30,c,13,BARCODE_CODE128);
+
+}
+
 void NewEditorWidget::printClicked()
 {
 //    JetPrintWindow *printWin = new JetPrintWindow(this->mPaintframe->getPrintPixmap(),this->mPaintframe);
@@ -306,5 +344,10 @@ void NewEditorWidget::paintFrameChanged(double width, double height)
     heightStr.append(QString::number(height));
     heightStr.append("میلی متر");
     printHeightLabel->setText(heightStr);
+}
+
+void NewEditorWidget::fontSizeChanged(int fontSize)
+{
+    mPaintframe->fontSizeChanged(fontSize);
 }
 

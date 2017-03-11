@@ -69,6 +69,11 @@ bool DiamondItem::isInside(QPoint point)
     return false;
 }
 
+void DiamondItem::changeFontSize(int fontSize)
+{
+
+}
+
 
 void DiamondItem::itemDropEvent(QDropEvent *event)
 {

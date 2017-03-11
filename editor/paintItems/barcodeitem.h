@@ -20,6 +20,7 @@
 #include <QPainter>
 #include <qzint.h>
 #include <zint.h>
+
 #include <stdio.h>
 #include <paintItems/drawitem.h>
 
@@ -32,7 +33,7 @@
 class BarcodeItem: public DrawItem
 {
 public:
-    BarcodeItem(QWidget *parent,QPointF position,int width,int height);
+    BarcodeItem(QWidget *parent,QPointF position,int width,int height,int length,unsigned char* code,int barcodeType);
 
     QPoint getPosition();
     int getWidth() const;
@@ -42,6 +43,7 @@ public:
     void hideItem();
     void showItem();
     bool isInside(QPoint point);
+    void changeFontSize(int fontSize);
 
     bool onMousePressed(QMouseEvent *event);
     void onMouseReleased(QMouseEvent *event);
@@ -55,12 +57,17 @@ public:
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
+    void setupBarcode(int type,int width,int height,unsigned char *c,int length);
+    void updateBarcodeSize();
 public:
     struct zint_symbol *my_symbol;
     QPointF position;
     int width;
     int height;
+private:
+    int barcodeType;
+    unsigned char* code;
+    int codeLength;
 //    mutable Zint::QZint bc;
 //    int w,h;
 //    Zint::QZint::AspectRatioMode ar;

@@ -40,6 +40,24 @@ BarcodeTabWidget::BarcodeTabWidget(QWidget *parent):QWidget(parent)
     mainLayout->addWidget(addEan13Btn);
     mainLayout->addWidget(addCode128Btn);
     mainLayout->addStretch();
+    connect(addQrBtn,SIGNAL(clicked(bool)),this,SLOT(qrBtnClicked()));
+    connect(addEan13Btn,SIGNAL(clicked(bool)),this,SLOT(ean13BtnClicked()));
+    connect(addCode128Btn,SIGNAL(clicked(bool)),this,SLOT(code128BtnClicked()));
     setLayout(mainLayout);
+}
+
+void BarcodeTabWidget::qrBtnClicked()
+{
+    emit qrClicked();
+}
+
+void BarcodeTabWidget::ean13BtnClicked()
+{
+    emit ean13Clicked();
+}
+
+void BarcodeTabWidget::code128BtnClicked()
+{
+    emit code128Clicked();
 }
 

@@ -69,6 +69,11 @@ bool DateItem::isInside(QPoint point)
     return false;
 }
 
+void DateItem::changeFontSize(int fontSize)
+{
+
+}
+
 
 void DateItem::itemDropEvent(QDropEvent *event)
 {

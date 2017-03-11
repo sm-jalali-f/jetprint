@@ -4,16 +4,15 @@
 EditorWidget::EditorWidget(QWidget *parent) :
     QWidget(parent)
 {
+    qDebug()<<"EditorWidget: start of constructor";
+
 
     verticalLayout = new QVBoxLayout();
     mainToolsLayout = new QHBoxLayout();
     QWidget *subToolTopWidget =new QWidget();
     subMainToolLayout = new QHBoxLayout(subToolTopWidget);
-//    shapeSubToolsLayout= new QHBoxLayout();
-//    textSubToolsLayout= new QHBoxLayout();
 
     shapeBtn = new QPushButton();
-//    shapeBtn->setStyleSheet("border-top: 3px Qt::transparent;border-bottom: 3px Qt::transparent;border-right: 10px Qt::transparent;border-left: 10px Qt::transparent;");
     QPixmap pixmapShape(":/res/icons/ic_circle");
     QIcon shapeIcon(pixmapShape);
     shapeBtn->setIcon(shapeIcon);
@@ -70,6 +69,7 @@ EditorWidget::EditorWidget(QWidget *parent) :
     printBtn->setIconSize(pixmapPrint.rect().size()/1);
     printBtn->setFixedSize(pixmapPrint.rect().size()*1.3);
 
+        qDebug()<<"EditorWidget: created btns";
 //    textbtn->setDisabled(true);
     saveBtn->setDisabled(true);
     undoBtn->setDisabled(true);
@@ -87,11 +87,14 @@ EditorWidget::EditorWidget(QWidget *parent) :
     mainToolsLayout->addWidget(printBtn);
     mainToolsLayout->addStretch(1);
     widget = new QWidget();
+    qDebug()<<"EditorWidget: added widget to main layout";
 
     verticalLayout->addLayout(mainToolsLayout);
     verticalLayout->addWidget(subToolTopWidget);
     verticalLayout->addWidget(widget);
+    qDebug()<<"EditorWidget: before create paint frame";
     paintFrame = new PaintFrame();
+    qDebug()<<"EditorWidget: after created frame";
     verticalLayout->addWidget(paintFrame);
 //    printInfoLayout = new QVBoxLayout();
 //    QLabel *infoLabel = new QLabel("اطلاعات چاپ");
@@ -99,6 +102,7 @@ EditorWidget::EditorWidget(QWidget *parent) :
 //    verticalLayout->addLayout(printInfoLayout);
     verticalLayout->addStretch(1);
 
+    qDebug()<<"EditorWidget: before set layout";
 
     setLayout(verticalLayout);
     connect(barcodeBtn,SIGNAL(clicked()),this,SLOT(onBarcodeBtnClicked()));
@@ -109,6 +113,8 @@ EditorWidget::EditorWidget(QWidget *parent) :
     connect(imageBtn,SIGNAL(clicked()),this,SLOT(onImageBtnClicked()));
     onShapeBtnClicked();
     subToolTopWidget->setFixedHeight(shapeBtn->height());
+    qDebug()<<"EditorWidget: end of construct";
+
 //    subMainToolLayout->SetMinimumSize(QSize(10,shapeBtn->height()))
 }
 

@@ -109,6 +109,11 @@ bool CircleItem::isInside(QPoint point)
     return false;
 }
 
+void CircleItem::changeFontSize(int fontSize)
+{
+
+}
+
 
 
 bool CircleItem::onMousePressed(QMouseEvent *event)

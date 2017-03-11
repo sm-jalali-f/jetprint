@@ -18,6 +18,7 @@ public:
     void hideItem();
     void showItem();
     bool isInside(QPoint point);
+    void changeFontSize(int fontSize);
 
     bool onMousePressed(QMouseEvent *event);
     void onMouseReleased(QMouseEvent *event);

@@ -34,7 +34,7 @@ public:
 
     PaintFrame(QWidget *parent = 0);
     QGraphicsScene *scene;
-    void addBarcode(QPointF position,int width,int height);
+    void addBarcode(QPointF position,int width,int height,unsigned char* code,int length,int typeBarcode);
     void addCircle(QPointF position,int radius);
 
     void addRectangle(QPointF position,int width,int height);
@@ -57,6 +57,7 @@ public:
     QPixmap getPrintPixmap();// cut paint space from whole of paint frame
     bool isDynamic();
     void unSelectAllItem();
+    void fontSizeChanged(int fontSize);
     int RULER_WIDTH =40;
 signals:
     void paintFrameChanged(double width,double height);

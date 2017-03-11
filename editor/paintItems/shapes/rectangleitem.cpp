@@ -72,6 +72,11 @@ bool RectangleItem::isInside(QPoint point)
     return false;
 }
 
+void RectangleItem::changeFontSize(int fontSize)
+{
+
+}
+
 
 
 void RectangleItem::itemDropEvent(QDropEvent *event)

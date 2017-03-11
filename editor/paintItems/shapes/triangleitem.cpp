@@ -82,6 +82,11 @@ bool TriangleItem::isInside(QPoint point)
     return false;
 }
 
+void TriangleItem::changeFontSize(int fontSize)
+{
+
+}
+
 
 void TriangleItem::itemDropEvent(QDropEvent *event)
 {

@@ -18,48 +18,19 @@
 #include <qrgb.h>
 #include "barcodeitem.h"
 
-BarcodeItem::BarcodeItem(QWidget *parent,QPointF position, int width, int height):DrawItem()
+BarcodeItem::BarcodeItem(QWidget *parent,QPointF position, int width, int height,int length,unsigned char* code,int barcodeType):DrawItem()
 {
     this->parent = parent;
     this->position = position;
     this->width = width;
     this->height = height;
     this->itemType = BARCODE_ITEM;
-//    unsigned char* t ="out.png";
-//    struct zint_symbol *my_symbol;
-//    struct zint_symbol *my_symbol;
-//    my_symbol = ZBarcode_Create();
-//    ZBarcode_Encode(my_symbol, argv[1], 0);
-//    ZBarcode_Print(my_symbol, 0);
-//    ZBarcode_Delete(my_symbol);
-//    return 0;
-     my_symbol = ZBarcode_Create();
-     my_symbol->symbology = BARCODE_UPCA;
-//     error = ZBarcode_Encode_and_Print(my_symbol, "72527270270+12345");
+    this->barcodeType =barcodeType;
+    this->codeLength =length;
+    qDebug()<<"BarcodeItem:BarcodeItem: before setup";
+    setupBarcode(barcodeType,width,height,code,length);
+    qDebug()<<"BarcodeItem:BarcodeItem: after setup";
 
-     unsigned char c[] ={0x61,0x61,0x62,0x61,0x62,0x61,0x62,0x61,0x62,0x61,0x62,0x61,0x62};
-     my_symbol->input_mode = UNICODE_MODE;
-     my_symbol->symbology = BARCODE_CODE128 ;
-     qDebug()<<"Adasd";
-     my_symbol->width=200;
-     my_symbol->height=50;
-//     ZBarcode_Encode(my_symbol,c,0);
-//    ZBarcode_Print(my_symbol,0);
-//     ZBarcode_Encode_File(my_symbol,"test.png");
-//     ZBarcode_Encode_File_and_Print(my_symbochol,"pic",50);
-
-      ZBarcode_Encode(my_symbol, c,13);
-      ZBarcode_Encode_File(my_symbol, "pic.png");
-      ZBarcode_Print(my_symbol, 0);
-      ZBarcode_Encode_and_Print(my_symbol, c,13,0);
-      ZBarcode_Encode_File_and_Print(my_symbol, "pic.png",0);
-
-        qDebug()<<my_symbol->width;
-        qDebug()<<my_symbol->height;
-    ZBarcode_Delete(my_symbol);
-
-//	w=550;
-//	h=230;
 }
 
 
@@ -123,6 +94,11 @@ bool BarcodeItem::isInside(QPoint point)
         return true;
     }
     return false;
+}
+
+void BarcodeItem::changeFontSize(int fontSize)
+{
+
 }
 
 
@@ -197,23 +173,27 @@ MouseMoveResult  BarcodeItem::onMouseMove(QMouseEvent *event)
     case  BOTTOM_RESIZING:
         lastHeight = height;
         height = height + ((-middleBottom.y() +event->pos().y()))/2;
+        this->updateBarcodeSize();
         this->update();
         return  TOP_RESIZE_PRESSED;
     case  TOP_RESIZING:
         lastHeight = height;
         height = height + ((middleTop.y() -event->pos().y()))/2;
         setPosition(getPosition().x(),getPosition().y()+lastHeight-height);
+        this->updateBarcodeSize();
         this->update();
         return  TOP_RESIZE_PRESSED;
     case  LEFT_RESIZING:
         lastWidth = width;
         width = width + ((middleLeft.x() -event->pos().x()))/2;
         setPosition(getPosition().x()+lastWidth-width,getPosition().y());
+        this->updateBarcodeSize();
         this->update();
         return  LEFT_RESIZE_PRESSED;
     case  RIGHT_RESIZING:
         lastWidth = width;
         width = width + ((-middleRight.x() +event->pos().x()))/2;
+        this->updateBarcodeSize();
         this->update();
         return  RIGHT_RESIZE_PRESSED;
     case  LEFT_TOP_RESIZING:
@@ -222,6 +202,7 @@ MouseMoveResult  BarcodeItem::onMouseMove(QMouseEvent *event)
         lastWidth = width;
         width = width + ((middleLeft.x() -event->pos().x()))/2;
         setPosition(getPosition().x()+lastWidth-width,getPosition().y()+lastHeight-height);
+        this->updateBarcodeSize();
         this->update();
         return  LEFT_TOP_RESIZE_PRESSED;
     case  LEFT_BOTTOM_RESIZING:
@@ -230,6 +211,7 @@ MouseMoveResult  BarcodeItem::onMouseMove(QMouseEvent *event)
         lastWidth = width;
         width = width + ((middleLeft.x() -event->pos().x()))/2;
         setPosition(getPosition().x()+lastWidth-width,getPosition().y());
+        this->updateBarcodeSize();
         this->update();
         return  LEFT_BOTTOM_RESIZE_PRESSED;
 
@@ -239,6 +221,7 @@ MouseMoveResult  BarcodeItem::onMouseMove(QMouseEvent *event)
         lastHeight = height;
         height = height + ((middleTop.y() -event->pos().y()))/2;
         setPosition(getPosition().x(),getPosition().y()+lastHeight-height);
+        this->updateBarcodeSize();
         this->update();
         return  RIGHT_TOP_RESIZE_PRESSED;
     case  RIGHT_BOTTOM_RESIZING:
@@ -246,12 +229,13 @@ MouseMoveResult  BarcodeItem::onMouseMove(QMouseEvent *event)
         height = height + ((-middleBottom.y() +event->pos().y()))/2;
         lastWidth = width;
         width = width + ((-middleRight.x() +event->pos().x()))/2;
+        this->updateBarcodeSize();
         this->update();
         return  RIGHT_BOTTOM_RESIZE_PRESSED;
 
     case  PREPARE_FOR_DRAGING :
         itemState =  DRAGING;
-        qDebug()<<"CircleItem: onMouseMove() prepare for draging";
+//        qDebug()<<"CircleItem: onMouseMove() prepare for draging";
         QByteArray itemData;
         QDataStream dataStream(&itemData, QIODevice::WriteOnly);
         QPoint circleCenter(this->getPosition().x(),this->getPosition().y());
@@ -337,7 +321,10 @@ void BarcodeItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * opt
     if(isRemoved())
         return;
     QImage image("out.png");
-    qDebug()<<image.byteCount();
+
+    width = image.width();
+    height= image.height();
+//    qDebug()<<image.byteCount();
     scene()->setBackgroundBrush(shapeBgBrush);
     painter->setOpacity(Qt::transparent);
     if(!isDragingItem())
@@ -349,7 +336,43 @@ void BarcodeItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * opt
     if(isDrawBorder()){
         this->paintSelectBorder(painter,leftTop,rightTop,leftBottom,rightBottom);
     }
-//    bc.render(*painter,boundingRect(),ar);
+    //    bc.render(*painter,boundingRect(),ar);
+}
+
+void BarcodeItem::setupBarcode(int type, int width, int height, unsigned char *c,int length)
+{
+    qDebug()<<"BarcodeItem:setupBarcode: start";
+    my_symbol = ZBarcode_Create();
+    my_symbol->input_mode = UNICODE_MODE;
+    my_symbol->symbology = type ;
+    my_symbol->bitmap_height=height;
+    my_symbol->bitmap_width =width;
+    my_symbol->width=width;
+    my_symbol->height=height;
+    my_symbol->scale =5;
+    qDebug()<<"BarcodeItem:setupBarcode: before encode";
+
+    ZBarcode_Encode(my_symbol, c,length);
+//    ZBarcode_Encode_File(my_symbol, "pic.png");
+    qDebug()<<"BarcodeItem:setupBarcode: after encode";
+
+    ZBarcode_Print(my_symbol, 0);
+    qDebug()<<"BarcodeItem:setupBarcode: after print";
+
+//    ZBarcode_Encode_and_Print(my_symbol, c,length,0);
+//    ZBarcode_Encode_File_and_Print(my_symbol, "pic.png",0);
+
+//    qDebug()<<my_symbol->width;
+//    qDebug()<<my_symbol->height;
+    ZBarcode_Delete(my_symbol);
+    qDebug()<<"BarcodeItem:setupBarcode: end";
+
+//    this->update();
+}
+
+void BarcodeItem::updateBarcodeSize()
+{
+    setupBarcode(barcodeType,width,height,code,codeLength);
 }
 
 

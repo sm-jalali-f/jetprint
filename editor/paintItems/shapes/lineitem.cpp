@@ -81,6 +81,11 @@ bool LineItem::isInside(QPoint point)
     return false;
 }
 
+void LineItem::changeFontSize(int fontSize)
+{
+
+}
+
 
 
 void LineItem::itemDropEvent(QDropEvent *event)

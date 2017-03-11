@@ -27,6 +27,7 @@ public:
     virtual int getHeight() const = 0;
     virtual void setPosition(int x,int y) = 0;
     virtual QPixmap toPixmap() = 0;
+    virtual void changeFontSize(int fontSize) = 0;
     void hideItem();
     void showItem();
     bool isRemoved();

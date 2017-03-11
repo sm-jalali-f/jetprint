@@ -9,6 +9,7 @@ TextItem::TextItem(QWidget *parent, QPointF position,int width,int height):DrawI
     this->height = height;
     this->itemType =  TEXT_ITEM;
     buildKeyboardHash();
+    fontSize =15;
 
 }
 
@@ -308,12 +309,18 @@ void TextItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         painter->setPen(shapePen);
     else
         painter->setPen(dragPen);
-    painter->setFont(QFont("TAHOMA",25));
+    painter->setFont(QFont("TAHOMA",fontSize));
     painter->drawText(position.x(),position.y(),width,height,Qt::AlignCenter,this->text);
     updateCornerPoint();
     if(isDrawBorder()){
         this->paintSelectBorder(painter,leftTop,rightTop,leftBottom,rightBottom);
     }
+}
+
+void TextItem::changeFontSize(int fontSize)
+{
+    this->fontSize =fontSize;
+    this->update();
 }
 
 void TextItem::buildKeyboardHash()

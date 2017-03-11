@@ -4,11 +4,14 @@
 #include <paintItems/shapes/circleitem.h>
 PaintFrame::PaintFrame(QWidget *parent) : QGraphicsView(parent)
 {
-
+    qDebug()<<"PaintFrame: start of constructor";
     isPressedObject = false;
     isDraging = false;
     hasDynamicItem = false;
+
     endLineDivider = new EndPaintLine(this,fixedHeight);
+    qDebug()<<"PaintFrame: created EndPaintLine";
+
     this->setFixedSize(fixedWidth,fixedHeight);
     scene = new QGraphicsScene(0,0,fixedWidth,fixedHeight );
     this->setScene(scene);
@@ -17,23 +20,39 @@ PaintFrame::PaintFrame(QWidget *parent) : QGraphicsView(parent)
     this->ensureVisible(0,0,fixedWidth,fixedHeight,0,0);
     this->setBackgroundBrush(QColor(255, 255, 255));
     scene->setBackgroundBrush(QColor(100,102,123));
+    qDebug()<<"PaintFrame: before add EndPaintLine";
 
     scene->addItem(endLineDivider);
+    qDebug()<<"PaintFrame: after add EndPaintLine";
+
     endLineDivider->show();
-    drawDividerLine(minimumEndLineX);
+
+
+
     vRuler = new VerticalRuler(this,fixedHeight-RULER_WIDTH,RULER_WIDTH);
     scene->addItem(vRuler);
     vRuler->show();
-    this->show();
+    qDebug()<<"PaintFrame: added vertical ruller";
+
     hRuler = new HorizontalRuler(this,RULER_WIDTH,vRuler->getLastLine().y(),fixedWidth-RULER_WIDTH,vRuler->getInterval(),fixedHeight-vRuler->getLastLine().y());
     scene->addItem(hRuler);
     hRuler->show();
 
+    drawDividerLine(minimumEndLineX);
+    qDebug()<<"PaintFrame: added divider line";
+
+    this->show();
+
+    qDebug()<<"PaintFrame: end of constructor";
+
+
 }
 
-void PaintFrame::addBarcode(QPointF position,int width,int height)
+void PaintFrame::addBarcode(QPointF position,int width,int height,unsigned char* code,int length,int typeBarcode)
 {
-    BarcodeItem *barcode = new BarcodeItem(this,position,width,height);
+    qDebug()<<"PaintFrame:addBarcode: start";
+    unsigned char c[] ={0x61,0x61,0x62,0x61,0x62,0x61,0x62,0x61,0x62,0x61,0x62,0x61,0x62};
+    BarcodeItem *barcode = new BarcodeItem(this,position,width,height,13,c,typeBarcode);
     barcode->setAcceptHoverEvents(true);
     scene->addItem(barcode);
     barcode->show();
@@ -189,6 +208,8 @@ void PaintFrame::addCounterItem(QPointF point)
 }
 void PaintFrame::drawDividerLine(int x)
 {
+    qDebug()<<"PaintFrame:drawDividerLine: start";
+
     if(x<=0)
         return;
     bool firstCall =false;
@@ -196,18 +217,33 @@ void PaintFrame::drawDividerLine(int x)
         firstCall= true;
     }
     endLineDivider->setXPos(x);
-    if(vRuler->getInterval()!=0){
-        double tempWidth = 1.0;
-        qDebug()<<"PaintFrame drawDividerLine tempwidth="<<tempWidth;
-        tempWidth = (endLinePosX-RULER_WIDTH);
-        qDebug()<<"PaintFrame drawDividerLine tempwidth="<<tempWidth;
-        tempWidth = tempWidth/vRuler->getInterval();
-        qDebug()<<"PaintFrame drawDividerLine tempwidth="<<tempWidth;
-        double tempHeight = 1.0*vRuler->REAL_FIXED_HEIGHT;
-        qDebug()<<"PaintFrame drawDividerLine tempwidth="<<tempWidth;
-        emit paintFrameChanged(tempWidth,tempHeight);
-        qDebug()<<"PaintFrame drawDividerLine tempwidth="<<tempWidth;
+    qDebug()<<"PaintFrame:drawDividerLine: seted pos x";
+
+    if(vRuler!=NULL){
+        qDebug()<<"PaintFrame:drawDividerLine: vRuler not null";
+        vRuler->getInterval();
+        qDebug()<<"PaintFrame:drawDividerLine: vRuler not null";
+
+        if(vRuler->getInterval()!=0){
+            qDebug()<<"PaintFrame:drawDividerLine: in if";
+            double tempWidth = 1.0;
+//            qDebug()<<"PaintFrame drawDividerLine tempwidth="<<tempWidth;
+            tempWidth = (endLinePosX-RULER_WIDTH);
+//            qDebug()<<"PaintFrame drawDividerLine tempwidth="<<tempWidth;
+            tempWidth = tempWidth/vRuler->getInterval();
+//            qDebug()<<"PaintFrame drawDividerLine tempwidth="<<tempWidth;
+            double tempHeight = 1.0*vRuler->REAL_FIXED_HEIGHT;
+//            qDebug()<<"PaintFrame drawDividerLine tempwidth="<<tempWidth;
+            emit paintFrameChanged(tempWidth,tempHeight);
+//            qDebug()<<"PaintFrame drawDividerLine tempwidth="<<tempWidth;
+        }else{
+            qDebug()<<"PaintFrame:drawDividerLine: else ";
+
+        }
+    }else{
+        qDebug()<<"PaintFrame:drawDividerLine: vruler null";
     }
+    qDebug()<<"PaintFrame:drawDividerLine: end";
 
 }
 
@@ -279,6 +315,15 @@ void PaintFrame::unSelectAllItem()
 {
     for(int i=0;i<itemList.size();i++){
         itemList.at(i)->unSelect();
+    }
+}
+
+void PaintFrame::fontSizeChanged(int fontSize)
+{
+    for(int i=0;i<itemList.size();i++){
+        if(itemList.at(i)->getItemType()==TEXT_ITEM){
+            itemList.at(i)->changeFontSize(fontSize);
+        }
     }
 }
 

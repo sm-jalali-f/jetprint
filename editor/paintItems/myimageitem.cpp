@@ -74,6 +74,11 @@ bool MyImageItem::isInside(QPoint point)
     return false;
 }
 
+void MyImageItem::changeFontSize(int fontSize)
+{
+
+}
+
 bool MyImageItem::onMousePressed(QMouseEvent *event)
 {
     mousePressUpdateState(QPoint(event->pos().x(),event->pos().y()));

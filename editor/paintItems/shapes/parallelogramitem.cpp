@@ -72,6 +72,11 @@ bool ParallelogramItem::isInside(QPoint point)
     return false;
 }
 
+void ParallelogramItem::changeFontSize(int fontSize)
+{
+
+}
+
 
 void ParallelogramItem::itemDropEvent(QDropEvent *event)
 {

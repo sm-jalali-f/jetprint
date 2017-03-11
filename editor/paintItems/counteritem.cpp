@@ -73,6 +73,11 @@ bool CounterItem::isInside(QPoint point)
 
 }
 
+void CounterItem::changeFontSize(int fontSize)
+{
+
+}
+
 bool CounterItem::onMousePressed(QMouseEvent *event)
 {
     mousePressUpdateState(QPoint(event->pos().x(),event->pos().y()));

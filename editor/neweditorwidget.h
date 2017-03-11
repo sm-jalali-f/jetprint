@@ -51,9 +51,11 @@ public slots:
     void addCounter();
     void addDate();
     void addTime();
-
+    void addQrBarcode();
+    void addEan13Barcode();
+    void addCode128Barcode();
     void paintFrameChanged(double width,double height);
-
+    void fontSizeChanged(int fontSize);
     void printClicked();
     void settingClicked();
     void saveClicked();
@@ -61,6 +63,7 @@ public slots:
     void newProjectClicked();
     void undoClicked();
     void redoClicked();
+
 
 };
 

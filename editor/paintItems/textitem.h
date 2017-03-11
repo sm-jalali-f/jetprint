@@ -32,9 +32,11 @@ public:
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void changeFontSize(int fontSize);
 //    void paintSelectBorder(QPainter *painter, QPointF leftTop, QPointF rightTop,QPointF leftBottom,QPointF rightBottom);
 private:
     QString text = "Text";
+    int fontSize;
     QPointF position;
     int width;
     int height;
