@@ -87,7 +87,8 @@ SOURCES       = ../editor/main.cpp \
 		../editor/settingDialog/timedatewidget.cpp \
 		../editor/newprintwindow.cpp \
 		../editor/printsettingdialog.cpp \
-		../editor/paintItems/counteritem.cpp qrc_resFile.cpp \
+		../editor/paintItems/counteritem.cpp \
+		../editor/tabWidget/textformattab.cpp qrc_resFile.cpp \
 		moc_editorwidget.cpp \
 		moc_paintframe.cpp \
 		moc_printwindow.cpp \
@@ -99,7 +100,8 @@ SOURCES       = ../editor/main.cpp \
 		moc_barcodetabwidget.cpp \
 		moc_formattabwidget.cpp \
 		moc_newprintwindow.cpp \
-		moc_printsettingdialog.cpp
+		moc_printsettingdialog.cpp \
+		moc_textformattab.cpp
 OBJECTS       = main.o \
 		editorwidget.o \
 		paintframe.o \
@@ -140,6 +142,7 @@ OBJECTS       = main.o \
 		newprintwindow.o \
 		printsettingdialog.o \
 		counteritem.o \
+		textformattab.o \
 		qrc_resFile.o \
 		moc_editorwidget.o \
 		moc_paintframe.o \
@@ -152,7 +155,8 @@ OBJECTS       = main.o \
 		moc_barcodetabwidget.o \
 		moc_formattabwidget.o \
 		moc_newprintwindow.o \
-		moc_printsettingdialog.o
+		moc_printsettingdialog.o \
+		moc_textformattab.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -258,7 +262,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../editor/settingDialog/timedatewidget.h \
 		../editor/newprintwindow.h \
 		../editor/printsettingdialog.h \
-		../editor/paintItems/counteritem.h ../editor/main.cpp \
+		../editor/paintItems/counteritem.h \
+		../editor/tabWidget/textformattab.h ../editor/main.cpp \
 		../editor/editorwidget.cpp \
 		../editor/paintframe.cpp \
 		../editor/printwindow.cpp \
@@ -297,7 +302,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../editor/settingDialog/timedatewidget.cpp \
 		../editor/newprintwindow.cpp \
 		../editor/printsettingdialog.cpp \
-		../editor/paintItems/counteritem.cpp
+		../editor/paintItems/counteritem.cpp \
+		../editor/tabWidget/textformattab.cpp
 QMAKE_TARGET  = editor
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = editor
@@ -496,8 +502,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../editor/resFile.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents ../editor/editorwidget.h ../editor/paintframe.h ../editor/printwindow.h ../editor/serialport/printhandler.h ../editor/paintItems/shapes/circleitem.h ../editor/paintItems/shapes/rectangleitem.h ../editor/paintItems/drawitem.h ../editor/paintItems/shapes/triangleitem.h ../editor/paintItems/shapes/ovalitem.h ../editor/paintItems/shapes/diamonditem.h ../editor/paintItems/shapes/lineitem.h ../editor/paintItems/shapes/parallelogramitem.h ../editor/paintItems/dateitem.h ../editor/paintItems/myimageitem.h ../editor/readport.h ../editor/actionHandler/paintaction.h ../editor/actionHandler/actionmanager.h ../editor/paintItems/textitem.h ../editor/types/drawitemtype.h ../editor/types/mousemoveresult.h ../editor/types/drawitemstate.h ../editor/paintItems/barcodeitem.h ../editor/barcodeselectdialog.h ../editor/types/printtype.h ../editor/paintItems/endpaintline.h ../editor/paintItems/verticalruler.h ../editor/paintItems/horizontalruler.h ../editor/neweditorwidget.h ../editor/tabWidget/shapetabwidget.h ../editor/tabWidget/inserttabwidget.h ../editor/tabWidget/barcodetabwidget.h ../editor/tabWidget/formattabwidget.h ../editor/settingDialog/settingdialog.h ../editor/settingDialog/generaltabwidget.h ../editor/settingDialog/networktabwidget.h ../editor/settingDialog/timedatewidget.h ../editor/newprintwindow.h ../editor/printsettingdialog.h ../editor/paintItems/counteritem.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../editor/main.cpp ../editor/editorwidget.cpp ../editor/paintframe.cpp ../editor/printwindow.cpp ../editor/serialport/printhandler.cpp ../editor/paintItems/shapes/circleitem.cpp ../editor/paintItems/shapes/rectangleitem.cpp ../editor/paintItems/drawitem.cpp ../editor/paintItems/shapes/triangleitem.cpp ../editor/paintItems/shapes/ovalitem.cpp ../editor/paintItems/shapes/diamonditem.cpp ../editor/paintItems/shapes/lineitem.cpp ../editor/paintItems/shapes/parallelogramitem.cpp ../editor/paintItems/dateitem.cpp ../editor/paintItems/myimageitem.cpp ../editor/readport.cpp ../editor/actionHandler/paintaction.cpp ../editor/actionHandler/actionmanager.cpp ../editor/paintItems/textitem.cpp ../editor/types/drawitemtype.cpp ../editor/types/mousemoveresult.cpp ../editor/types/drawitemstate.cpp ../editor/paintItems/barcodeitem.cpp ../editor/barcodeselectdialog.cpp ../editor/types/printtype.cpp ../editor/paintItems/endpaintline.cpp ../editor/paintItems/verticalruler.cpp ../editor/paintItems/horizontalruler.cpp ../editor/neweditorwidget.cpp ../editor/tabWidget/shapetabwidget.cpp ../editor/tabWidget/inserttabwidget.cpp ../editor/tabWidget/barcodetabwidget.cpp ../editor/tabWidget/formattabwidget.cpp ../editor/settingDialog/settingdialog.cpp ../editor/settingDialog/generaltabwidget.cpp ../editor/settingDialog/networktabwidget.cpp ../editor/settingDialog/timedatewidget.cpp ../editor/newprintwindow.cpp ../editor/printsettingdialog.cpp ../editor/paintItems/counteritem.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../editor/editorwidget.h ../editor/paintframe.h ../editor/printwindow.h ../editor/serialport/printhandler.h ../editor/paintItems/shapes/circleitem.h ../editor/paintItems/shapes/rectangleitem.h ../editor/paintItems/drawitem.h ../editor/paintItems/shapes/triangleitem.h ../editor/paintItems/shapes/ovalitem.h ../editor/paintItems/shapes/diamonditem.h ../editor/paintItems/shapes/lineitem.h ../editor/paintItems/shapes/parallelogramitem.h ../editor/paintItems/dateitem.h ../editor/paintItems/myimageitem.h ../editor/readport.h ../editor/actionHandler/paintaction.h ../editor/actionHandler/actionmanager.h ../editor/paintItems/textitem.h ../editor/types/drawitemtype.h ../editor/types/mousemoveresult.h ../editor/types/drawitemstate.h ../editor/paintItems/barcodeitem.h ../editor/barcodeselectdialog.h ../editor/types/printtype.h ../editor/paintItems/endpaintline.h ../editor/paintItems/verticalruler.h ../editor/paintItems/horizontalruler.h ../editor/neweditorwidget.h ../editor/tabWidget/shapetabwidget.h ../editor/tabWidget/inserttabwidget.h ../editor/tabWidget/barcodetabwidget.h ../editor/tabWidget/formattabwidget.h ../editor/settingDialog/settingdialog.h ../editor/settingDialog/generaltabwidget.h ../editor/settingDialog/networktabwidget.h ../editor/settingDialog/timedatewidget.h ../editor/newprintwindow.h ../editor/printsettingdialog.h ../editor/paintItems/counteritem.h ../editor/tabWidget/textformattab.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../editor/main.cpp ../editor/editorwidget.cpp ../editor/paintframe.cpp ../editor/printwindow.cpp ../editor/serialport/printhandler.cpp ../editor/paintItems/shapes/circleitem.cpp ../editor/paintItems/shapes/rectangleitem.cpp ../editor/paintItems/drawitem.cpp ../editor/paintItems/shapes/triangleitem.cpp ../editor/paintItems/shapes/ovalitem.cpp ../editor/paintItems/shapes/diamonditem.cpp ../editor/paintItems/shapes/lineitem.cpp ../editor/paintItems/shapes/parallelogramitem.cpp ../editor/paintItems/dateitem.cpp ../editor/paintItems/myimageitem.cpp ../editor/readport.cpp ../editor/actionHandler/paintaction.cpp ../editor/actionHandler/actionmanager.cpp ../editor/paintItems/textitem.cpp ../editor/types/drawitemtype.cpp ../editor/types/mousemoveresult.cpp ../editor/types/drawitemstate.cpp ../editor/paintItems/barcodeitem.cpp ../editor/barcodeselectdialog.cpp ../editor/types/printtype.cpp ../editor/paintItems/endpaintline.cpp ../editor/paintItems/verticalruler.cpp ../editor/paintItems/horizontalruler.cpp ../editor/neweditorwidget.cpp ../editor/tabWidget/shapetabwidget.cpp ../editor/tabWidget/inserttabwidget.cpp ../editor/tabWidget/barcodetabwidget.cpp ../editor/tabWidget/formattabwidget.cpp ../editor/settingDialog/settingdialog.cpp ../editor/settingDialog/generaltabwidget.cpp ../editor/settingDialog/networktabwidget.cpp ../editor/settingDialog/timedatewidget.cpp ../editor/newprintwindow.cpp ../editor/printsettingdialog.cpp ../editor/paintItems/counteritem.cpp ../editor/tabWidget/textformattab.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -549,9 +555,9 @@ qrc_resFile.cpp: ../editor/resFile.qrc \
 		../editor/res/icons/ic_print.png
 	/usr/lib/x86_64-linux-gnu/qt5/bin/rcc -name resFile ../editor/resFile.qrc -o qrc_resFile.cpp
 
-compiler_moc_header_make_all: moc_editorwidget.cpp moc_paintframe.cpp moc_printwindow.cpp moc_printhandler.cpp moc_barcodeselectdialog.cpp moc_neweditorwidget.cpp moc_shapetabwidget.cpp moc_inserttabwidget.cpp moc_barcodetabwidget.cpp moc_formattabwidget.cpp moc_newprintwindow.cpp moc_printsettingdialog.cpp
+compiler_moc_header_make_all: moc_editorwidget.cpp moc_paintframe.cpp moc_printwindow.cpp moc_printhandler.cpp moc_barcodeselectdialog.cpp moc_neweditorwidget.cpp moc_shapetabwidget.cpp moc_inserttabwidget.cpp moc_barcodetabwidget.cpp moc_formattabwidget.cpp moc_newprintwindow.cpp moc_printsettingdialog.cpp moc_textformattab.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_editorwidget.cpp moc_paintframe.cpp moc_printwindow.cpp moc_printhandler.cpp moc_barcodeselectdialog.cpp moc_neweditorwidget.cpp moc_shapetabwidget.cpp moc_inserttabwidget.cpp moc_barcodetabwidget.cpp moc_formattabwidget.cpp moc_newprintwindow.cpp moc_printsettingdialog.cpp
+	-$(DEL_FILE) moc_editorwidget.cpp moc_paintframe.cpp moc_printwindow.cpp moc_printhandler.cpp moc_barcodeselectdialog.cpp moc_neweditorwidget.cpp moc_shapetabwidget.cpp moc_inserttabwidget.cpp moc_barcodetabwidget.cpp moc_formattabwidget.cpp moc_newprintwindow.cpp moc_printsettingdialog.cpp moc_textformattab.cpp
 moc_editorwidget.cpp: ../editor/paintframe.h \
 		../editor/paintItems/shapes/circleitem.h \
 		../editor/paintItems/drawitem.h \
@@ -571,6 +577,7 @@ moc_editorwidget.cpp: ../editor/paintframe.h \
 		../editor/paintItems/endpaintline.h \
 		../editor/paintItems/verticalruler.h \
 		../editor/paintItems/horizontalruler.h \
+		../editor/paintItems/counteritem.h \
 		../editor/printwindow.h \
 		../editor/serialport/printhandler.h \
 		../editor/readport.h \
@@ -597,6 +604,7 @@ moc_paintframe.cpp: ../editor/paintItems/shapes/circleitem.h \
 		../editor/paintItems/endpaintline.h \
 		../editor/paintItems/verticalruler.h \
 		../editor/paintItems/horizontalruler.h \
+		../editor/paintItems/counteritem.h \
 		../editor/paintframe.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/mohamad/projects/qt/jetprinter/editor -I/home/mohamad/Downloads/packages/zint/build/backend_qt4 -I/home/mohamad/Downloads/packages/zint/build/backend -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtQuick -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtQml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../editor/paintframe.h -o moc_paintframe.cpp
 
@@ -619,6 +627,7 @@ moc_printwindow.cpp: ../editor/paintframe.h \
 		../editor/paintItems/endpaintline.h \
 		../editor/paintItems/verticalruler.h \
 		../editor/paintItems/horizontalruler.h \
+		../editor/paintItems/counteritem.h \
 		../editor/serialport/printhandler.h \
 		../editor/readport.h \
 		../editor/types/printtype.h \
@@ -644,6 +653,7 @@ moc_printhandler.cpp: ../editor/paintframe.h \
 		../editor/paintItems/endpaintline.h \
 		../editor/paintItems/verticalruler.h \
 		../editor/paintItems/horizontalruler.h \
+		../editor/paintItems/counteritem.h \
 		../editor/readport.h \
 		../editor/types/printtype.h \
 		../editor/serialport/printhandler.h
@@ -671,6 +681,7 @@ moc_neweditorwidget.cpp: ../editor/paintframe.h \
 		../editor/paintItems/endpaintline.h \
 		../editor/paintItems/verticalruler.h \
 		../editor/paintItems/horizontalruler.h \
+		../editor/paintItems/counteritem.h \
 		../editor/printwindow.h \
 		../editor/serialport/printhandler.h \
 		../editor/readport.h \
@@ -695,7 +706,12 @@ moc_shapetabwidget.cpp: ../editor/tabWidget/shapetabwidget.h
 moc_inserttabwidget.cpp: ../editor/tabWidget/inserttabwidget.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/mohamad/projects/qt/jetprinter/editor -I/home/mohamad/Downloads/packages/zint/build/backend_qt4 -I/home/mohamad/Downloads/packages/zint/build/backend -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtQuick -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtQml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../editor/tabWidget/inserttabwidget.h -o moc_inserttabwidget.cpp
 
-moc_barcodetabwidget.cpp: ../editor/tabWidget/barcodetabwidget.h
+moc_barcodetabwidget.cpp: ../editor/paintItems/barcodeitem.h \
+		../editor/paintItems/drawitem.h \
+		../editor/types/drawitemtype.h \
+		../editor/types/mousemoveresult.h \
+		../editor/types/drawitemstate.h \
+		../editor/tabWidget/barcodetabwidget.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/mohamad/projects/qt/jetprinter/editor -I/home/mohamad/Downloads/packages/zint/build/backend_qt4 -I/home/mohamad/Downloads/packages/zint/build/backend -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtQuick -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtQml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../editor/tabWidget/barcodetabwidget.h -o moc_barcodetabwidget.cpp
 
 moc_formattabwidget.cpp: ../editor/tabWidget/formattabwidget.h
@@ -721,6 +737,7 @@ moc_newprintwindow.cpp: ../editor/printsettingdialog.h \
 		../editor/paintItems/endpaintline.h \
 		../editor/paintItems/verticalruler.h \
 		../editor/paintItems/horizontalruler.h \
+		../editor/paintItems/counteritem.h \
 		../editor/serialport/printhandler.h \
 		../editor/readport.h \
 		../editor/types/printtype.h \
@@ -729,6 +746,9 @@ moc_newprintwindow.cpp: ../editor/printsettingdialog.h \
 
 moc_printsettingdialog.cpp: ../editor/printsettingdialog.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/mohamad/projects/qt/jetprinter/editor -I/home/mohamad/Downloads/packages/zint/build/backend_qt4 -I/home/mohamad/Downloads/packages/zint/build/backend -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtQuick -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtQml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../editor/printsettingdialog.h -o moc_printsettingdialog.cpp
+
+moc_textformattab.cpp: ../editor/tabWidget/textformattab.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/mohamad/projects/qt/jetprinter/editor -I/home/mohamad/Downloads/packages/zint/build/backend_qt4 -I/home/mohamad/Downloads/packages/zint/build/backend -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtQuick -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtQml -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../editor/tabWidget/textformattab.h -o moc_textformattab.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -765,6 +785,7 @@ main.o: ../editor/main.cpp ../editor/widget.h \
 		../editor/paintItems/endpaintline.h \
 		../editor/paintItems/verticalruler.h \
 		../editor/paintItems/horizontalruler.h \
+		../editor/paintItems/counteritem.h \
 		../editor/printwindow.h \
 		../editor/serialport/printhandler.h \
 		../editor/readport.h \
@@ -803,6 +824,7 @@ editorwidget.o: ../editor/editorwidget.cpp ../editor/editorwidget.h \
 		../editor/paintItems/endpaintline.h \
 		../editor/paintItems/verticalruler.h \
 		../editor/paintItems/horizontalruler.h \
+		../editor/paintItems/counteritem.h \
 		../editor/printwindow.h \
 		../editor/serialport/printhandler.h \
 		../editor/readport.h \
@@ -828,7 +850,8 @@ paintframe.o: ../editor/paintframe.cpp ../editor/paintframe.h \
 		../editor/paintItems/textitem.h \
 		../editor/paintItems/endpaintline.h \
 		../editor/paintItems/verticalruler.h \
-		../editor/paintItems/horizontalruler.h
+		../editor/paintItems/horizontalruler.h \
+		../editor/paintItems/counteritem.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o paintframe.o ../editor/paintframe.cpp
 
 printwindow.o: ../editor/printwindow.cpp ../editor/printwindow.h \
@@ -851,6 +874,7 @@ printwindow.o: ../editor/printwindow.cpp ../editor/printwindow.h \
 		../editor/paintItems/endpaintline.h \
 		../editor/paintItems/verticalruler.h \
 		../editor/paintItems/horizontalruler.h \
+		../editor/paintItems/counteritem.h \
 		../editor/serialport/printhandler.h \
 		../editor/readport.h \
 		../editor/types/printtype.h
@@ -876,6 +900,7 @@ printhandler.o: ../editor/serialport/printhandler.cpp ../editor/serialport/print
 		../editor/paintItems/endpaintline.h \
 		../editor/paintItems/verticalruler.h \
 		../editor/paintItems/horizontalruler.h \
+		../editor/paintItems/counteritem.h \
 		../editor/readport.h \
 		../editor/types/printtype.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o printhandler.o ../editor/serialport/printhandler.cpp
@@ -1017,6 +1042,7 @@ neweditorwidget.o: ../editor/neweditorwidget.cpp ../editor/neweditorwidget.h \
 		../editor/paintItems/endpaintline.h \
 		../editor/paintItems/verticalruler.h \
 		../editor/paintItems/horizontalruler.h \
+		../editor/paintItems/counteritem.h \
 		../editor/printwindow.h \
 		../editor/serialport/printhandler.h \
 		../editor/readport.h \
@@ -1040,7 +1066,12 @@ shapetabwidget.o: ../editor/tabWidget/shapetabwidget.cpp ../editor/tabWidget/sha
 inserttabwidget.o: ../editor/tabWidget/inserttabwidget.cpp ../editor/tabWidget/inserttabwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o inserttabwidget.o ../editor/tabWidget/inserttabwidget.cpp
 
-barcodetabwidget.o: ../editor/tabWidget/barcodetabwidget.cpp ../editor/tabWidget/barcodetabwidget.h
+barcodetabwidget.o: ../editor/tabWidget/barcodetabwidget.cpp ../editor/tabWidget/barcodetabwidget.h \
+		../editor/paintItems/barcodeitem.h \
+		../editor/paintItems/drawitem.h \
+		../editor/types/drawitemtype.h \
+		../editor/types/mousemoveresult.h \
+		../editor/types/drawitemstate.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o barcodetabwidget.o ../editor/tabWidget/barcodetabwidget.cpp
 
 formattabwidget.o: ../editor/tabWidget/formattabwidget.cpp ../editor/tabWidget/formattabwidget.h
@@ -1082,6 +1113,7 @@ newprintwindow.o: ../editor/newprintwindow.cpp ../editor/newprintwindow.h \
 		../editor/paintItems/endpaintline.h \
 		../editor/paintItems/verticalruler.h \
 		../editor/paintItems/horizontalruler.h \
+		../editor/paintItems/counteritem.h \
 		../editor/serialport/printhandler.h \
 		../editor/readport.h \
 		../editor/types/printtype.h
@@ -1096,6 +1128,9 @@ counteritem.o: ../editor/paintItems/counteritem.cpp ../editor/paintItems/counter
 		../editor/types/mousemoveresult.h \
 		../editor/types/drawitemstate.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o counteritem.o ../editor/paintItems/counteritem.cpp
+
+textformattab.o: ../editor/tabWidget/textformattab.cpp ../editor/tabWidget/textformattab.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o textformattab.o ../editor/tabWidget/textformattab.cpp
 
 qrc_resFile.o: qrc_resFile.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resFile.o qrc_resFile.cpp
@@ -1135,6 +1170,9 @@ moc_newprintwindow.o: moc_newprintwindow.cpp
 
 moc_printsettingdialog.o: moc_printsettingdialog.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_printsettingdialog.o moc_printsettingdialog.cpp
+
+moc_textformattab.o: moc_textformattab.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_textformattab.o moc_textformattab.cpp
 
 ####### Install
 

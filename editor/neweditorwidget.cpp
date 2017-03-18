@@ -171,8 +171,8 @@ NewEditorWidget::NewEditorWidget(QWidget *parent):QWidget(parent)
     QObject::connect(mBarcodeTabWidget, SIGNAL(code128Clicked()),
                      this, SLOT(addCode128Barcode()));
 
-    QObject::connect(mFormatTabWidget, SIGNAL(onFontSizeChanged(int)),
-                     this, SLOT(fontSizeChanged(int)));
+//    QObject::connect(mFormatTabWidget, SIGNAL(onFontSizeChanged(int)),
+//                     this, SLOT(fontSizeChanged(int)));
 
     QObject::connect(mInsertTabWidget, SIGNAL(onTextBtnClicked()),this, SLOT(addText()));
     QObject::connect(mInsertTabWidget, SIGNAL(onImageBtnClicked()),this, SLOT(addImage()));

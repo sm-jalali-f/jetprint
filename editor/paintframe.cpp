@@ -42,6 +42,7 @@ PaintFrame::PaintFrame(QWidget *parent) : QGraphicsView(parent)
     qDebug()<<"PaintFrame: added divider line";
 
     this->show();
+//    this->setBackgroundBrush(QBrush());
 
     qDebug()<<"PaintFrame: end of constructor";
 
